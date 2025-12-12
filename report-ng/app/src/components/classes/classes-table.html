@@ -29,7 +29,7 @@
             <th class="mdc-data-table__header-cell" click.delegate="sortByRunIndex()">
                 <div class="mdc-data-table__header-cell-wrapper">
                     <div class="mdc-data-table__header-cell-label">Run index</div>
-                    <button class="mdc-icon-button material-icons mdc-data-table__sort-icon-button">
+                    <button class="mdc-icon-button material-icons mdc-data-table__sort-icon-button p-sort-button">
                         arrow_upward
                     </button>
                 </div>
@@ -37,7 +37,15 @@
             <th class="mdc-data-table__header-cell" click.delegate="sortByClass()">
                 <div class="mdc-data-table__header-cell-wrapper">
                     <div class="mdc-data-table__header-cell-label">Class (${uniqueClasses})</div>
-                    <button class="mdc-icon-button material-icons mdc-data-table__sort-icon-button">
+                    <button class="mdc-icon-button material-icons mdc-data-table__sort-icon-button p-sort-button">
+                        arrow_upward
+                    </button>
+                </div>
+            </th>
+            <th class="mdc-data-table__header-cell">
+                <div class="mdc-data-table__header-cell-wrapper">
+                    <div class="mdc-data-table__header-cell-label">Duration</div>
+                    <button class="mdc-icon-button material-icons mdc-data-table__sort-icon-button p-sort-button">
                         arrow_upward
                     </button>
                 </div>
@@ -47,7 +55,7 @@
                     <div class="mdc-data-table__header-cell-label">Method
                         (${filteredMethodDetails.length})
                     </div>
-                    <button class="mdc-icon-button material-icons mdc-data-table__sort-icon-button">
+                    <button class="mdc-icon-button material-icons mdc-data-table__sort-icon-button p-sort-button">
                         arrow_upward
                     </button>
                 </div>
@@ -56,16 +64,20 @@
             </thead>
             <tbody>
             <tr repeat.for="methodDetails of filteredMethodDetails">
+                <!-- Status -->
                 <td class="p1 centered-text">
                     <a class="badge status-${methodDetails.methodContext.resultStatus|statusClass}">${methodDetails.methodContext.resultStatus
                     | statusName}</a>
                 </td>
+                <!-- Run index -->
                 <td class="run-index-cell">${methodDetails.methodContext.methodRunIndex}</td>
                 <td class="p1 wrapable">
                     <a innerhtml.bind="methodDetails.classStatistics.classIdentifier|className:1|highlightText:searchInput"
                        route-href="route: tests; params.bind: withQueryParams({class: methodDetails.classStatistics.classIdentifier})"
                     ></a>
                 </td>
+                <!-- Duration -->
+                <td class="p1">${methodDetails.methodContext.contextValues.endTime-methodDetails.methodContext.contextValues.startTime | durationFormat:"h[h] m[min] s[s]"}</td>
                 <td class="p1 wrapable" mdc-body1>
 
                     <!-- Method name -->
