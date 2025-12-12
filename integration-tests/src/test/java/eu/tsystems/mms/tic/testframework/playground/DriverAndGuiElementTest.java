@@ -24,6 +24,7 @@ package eu.tsystems.mms.tic.testframework.playground;
 import eu.tsystems.mms.tic.testframework.AbstractTestSitesTest;
 import eu.tsystems.mms.tic.testframework.constants.Browsers;
 import eu.tsystems.mms.tic.testframework.core.pageobjects.testdata.PageWithExistingElement;
+import eu.tsystems.mms.tic.testframework.pageobjects.PreparedLocator;
 import eu.tsystems.mms.tic.testframework.pageobjects.UiElement;
 import eu.tsystems.mms.tic.testframework.pageobjects.UiElementFinder;
 import eu.tsystems.mms.tic.testframework.report.model.context.SessionContext;
@@ -48,6 +49,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
+
+import static eu.tsystems.mms.tic.testframework.pageobjects.LocatorFactoryProvider.LOCATE;
 
 public class DriverAndGuiElementTest extends AbstractTestSitesTest implements UiElementFinderFactoryProvider, PageFactoryProvider {
 
@@ -103,6 +106,16 @@ public class DriverAndGuiElementTest extends AbstractTestSitesTest implements Ui
         element.waitFor().attribute("href").getActual();
         element.waitFor().tagName().getActual();
         element.waitFor().classes().getActual();
+    }
+
+    @Test
+    public void testsimpleUiElementWithLocator() {
+        WebDriver driver = getWebDriver();
+
+        UiElementFinder uiElementFinder = UI_ELEMENT_FINDER_FACTORY.create(driver);
+        PreparedLocator locator = LOCATE.prepare("//*[@id='%s']");
+        UiElement uiElement = uiElementFinder.find(locator);
+        uiElement.waitFor().displayed(true);
     }
 
     @Test
