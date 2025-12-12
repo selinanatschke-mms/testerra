@@ -38,6 +38,7 @@ enum SortBy {
     Class = "CLASS",
     Method = "METHOD",
     RunIndex = "RUNINDEX",
+    Duration = "DURATION",
 }
 
 @autoinject()
@@ -307,6 +308,13 @@ export class Classes extends AbstractViewModel {
             case SortBy.RunIndex :  // Sort by run index
                 this._filteredMethodDetails = this._filteredMethodDetails.sort((a, b) => a.methodContext.methodRunIndex - b.methodContext.methodRunIndex);
                 break;
+            case SortBy.Duration :
+                this._filteredMethodDetails = this._filteredMethodDetails.sort((a, b) => {
+                    const durationA = a.methodContext.contextValues.endTime - a.methodContext.contextValues.startTime;
+                    const durationB = b.methodContext.contextValues.endTime - b.methodContext.contextValues.startTime;
+                    return durationA - durationB;
+                });
+                break;
             case SortBy.Class :
             default:
                 // Sort by class and method name
@@ -345,6 +353,11 @@ export class Classes extends AbstractViewModel {
 
     private _sortByMethod() {
         this._sortBy = SortBy.Method;
+        this._filterOnce();
+    }
+
+    private _sortByDuration() {
+        this._sortBy = SortBy.Duration;
         this._filterOnce();
     }
 
