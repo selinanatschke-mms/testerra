@@ -224,7 +224,7 @@ export class SessionTimings extends AbstractViewModel {
                 formatter: function (params) {
                     if (params.data) {
                         const seriesIndex = (params.seriesIndex - 2); // two series as offset for the legend placeholder
-                        const testNames = this._dots[seriesIndex].information.methodList.map(method => method.methodContext.contextValues.name);
+                        const testNames = this._dots[seriesIndex].information.methodList.map(method => method.identifier);
                         let tooltipString = '<div class="header" style="background-color: ' +
                             params.color + ';"> ' + this._dots[seriesIndex].information.browserName + ', Version: ' +
                             this._dots[seriesIndex].information.browserVersion + '</div> <br>';

@@ -30,12 +30,8 @@ import {NavigationInstruction, RouteConfig, Router} from "aurelia-router";
 import * as echarts from "echarts";
 import {EChartsOption} from "echarts";
 import {data} from "../../services/report-model";
-import {
-    IntlDateFormatValueConverter
-} from "t-systems-aurelia-components/src/value-converters/intl-date-format-value-converter";
-import {
-    DurationFormatValueConverter
-} from "t-systems-aurelia-components/src/value-converters/duration-format-value-converter";
+import {IntlDateFormatValueConverter} from "t-systems-aurelia-components/src/value-converters/intl-date-format-value-converter";
+import {DurationFormatValueConverter} from "t-systems-aurelia-components/src/value-converters/duration-format-value-converter";
 import {ClassName, ClassNameValueConverter} from "../../value-converters/class-name-value-converter";
 import {MdcSelect} from "@aurelia-mdc-web/select";
 import MethodContext = data.MethodContext;
@@ -288,12 +284,16 @@ export class Threads extends AbstractViewModel {
             startTimes.push(methodContext.contextValues.startTime);
         });
 
+
         const chartStartTime = Math.min.apply(Math, startTimes) - this._gapFromBorderToStart;
         const statusConverter = this._statusConverter;
+        const statisticsGenerator = this._statisticsGenerator;
+        console.log("thread", threadCategories);
 
-        threadCategories.forEach(function (methodContexts, threadName) {
-            methodContexts.forEach((context: MethodContext) => {
+        threadCategories.forEach(function (methodContexts: MethodContext[], threadName: string) {
+            methodContexts.forEach(async (context: MethodContext) => {
 
+                const methodDetails = await statisticsGenerator.getMethodDetails(context.contextValues.id);
                 const itemColor = statusConverter.getColorForStatus(context.resultStatus);
                 const duration = context.contextValues.endTime - context.contextValues.startTime;
                 const classId = executionStatistics.classStatistics.find(classStat => {
@@ -302,9 +302,11 @@ export class Threads extends AbstractViewModel {
                         .filter((value, index, self) => self.indexOf(value) === index);
                     return classContextIds.includes(context.classContextId);
                 }).classIdentifier;
+                console.log("details", methodDetails.identifier);
+
 
                 data.push({
-                    name: context.contextValues.name,
+                    name: methodDetails.identifier,
                     value: [
                         threadName,
                         context.contextValues.startTime,
