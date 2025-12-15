@@ -145,7 +145,7 @@ export class TestTimings extends AbstractViewModel {
             this._methodDetails.forEach(method => {
                 const testDurationMethod: ITestDurationMethod = {
                     id: method.methodContext.contextValues.id,
-                    name: method.methodContext.contextValues.name,
+                    name: method.identifier,
                     duration: (method.methodContext.contextValues.endTime - method.methodContext.contextValues.startTime)/1000,
                     methodType: method.methodContext.methodType,
                     status: method.methodContext.resultStatus
