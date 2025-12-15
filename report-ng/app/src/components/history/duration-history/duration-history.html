@@ -43,7 +43,7 @@
                                 <span>Run ${run.value[0]} (${run.value[2]} test cases)</span>
                             </mdc-list-item-primary-text>
                             <mdc-list-item-secondary-text>
-                                <span>${run.value[1] | durationFormat:"h[h] m[min] s[s] S[ms]"}</span>
+                                <span>${run.value[1] | durationFormat}</span>
                             </mdc-list-item-secondary-text>
                         </mdc-list-item>
                     </mdc-list>
@@ -70,7 +70,7 @@
                                 <span>${method.statistics.identifier}</span>
                             </mdc-list-item-primary-text>
                             <mdc-list-item-secondary-text>
-                                <span>${method.averageDuration | durationFormat:"h[h] m[min] s[s] S[ms]"}</span>
+                                <span>${method.averageDuration | durationFormat}</span>
                             </mdc-list-item-secondary-text>
                         </mdc-list-item>
                     </mdc-list>

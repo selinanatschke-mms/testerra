@@ -30,3 +30,4 @@ build
 /integration-tests/geckodriver.exe
 /integration-tests/report-pretest-status/
 /publish_*.*
+/gradle.properties

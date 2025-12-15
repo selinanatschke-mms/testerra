@@ -24,6 +24,7 @@ import {PLATFORM} from 'aurelia-pal';
 import {Config} from "./services/config-dev";
 import {IntlDateFormatValueConverter} from "t-systems-aurelia-components/src/value-converters/intl-date-format-value-converter"
 import {ObjectStorage} from "t-systems-aurelia-components/src/utils/object-storage";
+import {DurationFormatValueConverter} from "t-systems-aurelia-components/src/value-converters/duration-format-value-converter";
 
 export function configure(aurelia: Aurelia) {
 
@@ -120,6 +121,9 @@ export function configure(aurelia: Aurelia) {
         second: '2-digit',
         hour12: false,
     });
+
+    const durationFormatter = aurelia.container.get(DurationFormatValueConverter);
+    durationFormatter.setDefaultFormat("h[h] m[min] s[s] S[ms]");
 
     const objectStorage = aurelia.container.get(ObjectStorage);
     objectStorage.setStorage(localStorage);

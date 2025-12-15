@@ -33,6 +33,8 @@ export class ClassesTable {
     sortByClass: () => void;
     @bindable({defaultBindingMode: bindingMode.twoWay})
     sortByMethod: () => void;
+    @bindable({defaultBindingMode: bindingMode.twoWay})
+    sortByDuration: () => void;
     @bindable({defaultBindingMode: bindingMode.toView})
     private filteredMethodDetails: MethodDetails[];
     @bindable({defaultBindingMode: bindingMode.toView})

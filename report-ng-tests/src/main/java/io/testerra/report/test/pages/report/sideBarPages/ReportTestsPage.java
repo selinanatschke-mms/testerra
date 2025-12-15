@@ -80,7 +80,11 @@ public class ReportTestsPage extends AbstractReportPage {
     }
 
     public enum TestsTableEntry {
-        STATUS(0), INDEX(1), CLASS(2), METHOD(3);
+        STATUS(0),
+        INDEX(1),
+        CLASS(2),
+        DURATION(3),
+        METHOD(4);
 
         private final int value;
 
