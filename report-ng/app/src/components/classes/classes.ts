@@ -309,6 +309,7 @@ export class Classes extends AbstractViewModel {
                 this._filteredMethodDetails = this._filteredMethodDetails.sort((a, b) => a.methodContext.methodRunIndex - b.methodContext.methodRunIndex);
                 break;
             case SortBy.Duration :
+                // Currently not used
                 this._filteredMethodDetails = this._filteredMethodDetails.sort((a, b) => {
                     const durationA = a.methodContext.contextValues.endTime - a.methodContext.contextValues.startTime;
                     const durationB = b.methodContext.contextValues.endTime - b.methodContext.contextValues.startTime;
