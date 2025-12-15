@@ -42,9 +42,9 @@
                     </button>
                 </div>
             </th>
-            <th class="mdc-data-table__header-cell" click.delegate="sortByDuration()">
+            <th class="mdc-data-table__header-cell" click.delegate="sortByRunIndex()">
                 <div class="mdc-data-table__header-cell-wrapper">
-                    <div class="mdc-data-table__header-cell-label">Duration</div>
+                    <div class="mdc-data-table__header-cell-label">Start time</div>
                     <button class="mdc-icon-button material-icons mdc-data-table__sort-icon-button p-sort-button">
                         arrow_upward
                     </button>
@@ -77,7 +77,10 @@
                     ></a>
                 </td>
                 <!-- Duration -->
-                <td class="p1">${methodDetails.methodContext.contextValues.endTime-methodDetails.methodContext.contextValues.startTime | durationFormat:"h[h] m[min] s[s]"}</td>
+                <td class="p1">
+                    <div title="${methodDetails.methodContext.contextValues.startTime|dateFormat: 'default'}">${methodDetails.methodContext.contextValues.startTime|dateFormat: 'time'}</div>
+                    <div class="secondary secondary-note">(${methodDetails.methodContext.contextValues.endTime-methodDetails.methodContext.contextValues.startTime | durationFormat:"h[h] m[min] s[s]"})</div>
+                </td>
                 <td class="p1 wrapable" mdc-body1>
 
                     <!-- Method name -->
