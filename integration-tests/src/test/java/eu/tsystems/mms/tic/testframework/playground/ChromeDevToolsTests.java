@@ -36,13 +36,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.events.ConsoleEvent;
-import org.openqa.selenium.devtools.v140.fetch.Fetch;
-import org.openqa.selenium.devtools.v140.log.Log;
-import org.openqa.selenium.devtools.v140.log.model.LogEntry;
-import org.openqa.selenium.devtools.v140.network.Network;
-import org.openqa.selenium.devtools.v140.network.model.Request;
-import org.openqa.selenium.devtools.v140.network.model.RequestWillBeSent;
-import org.openqa.selenium.devtools.v140.network.model.ResponseReceived;
+import org.openqa.selenium.devtools.v142.fetch.Fetch;
+import org.openqa.selenium.devtools.v142.log.Log;
+import org.openqa.selenium.devtools.v142.log.model.LogEntry;
+import org.openqa.selenium.devtools.v142.network.Network;
+import org.openqa.selenium.devtools.v142.network.model.Request;
+import org.openqa.selenium.devtools.v142.network.model.RequestWillBeSent;
+import org.openqa.selenium.devtools.v142.network.model.ResponseReceived;
 import org.openqa.selenium.logging.HasLogEvents;
 import org.testng.annotations.Test;
 
@@ -217,7 +217,7 @@ public class ChromeDevToolsTests extends AbstractWebDriverTest implements Chrome
                 Optional.empty(),
                 Optional.empty(),
                 Optional.empty(),
-//                Optional.empty(),
+                Optional.empty(),
                 Optional.empty())
         );
 
