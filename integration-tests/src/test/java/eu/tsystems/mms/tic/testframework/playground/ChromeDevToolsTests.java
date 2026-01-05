@@ -36,13 +36,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.events.ConsoleEvent;
-import org.openqa.selenium.devtools.v137.fetch.Fetch;
-import org.openqa.selenium.devtools.v137.log.Log;
-import org.openqa.selenium.devtools.v137.log.model.LogEntry;
-import org.openqa.selenium.devtools.v137.network.Network;
-import org.openqa.selenium.devtools.v137.network.model.Request;
-import org.openqa.selenium.devtools.v137.network.model.RequestWillBeSent;
-import org.openqa.selenium.devtools.v137.network.model.ResponseReceived;
+import org.openqa.selenium.devtools.v142.fetch.Fetch;
+import org.openqa.selenium.devtools.v142.log.Log;
+import org.openqa.selenium.devtools.v142.log.model.LogEntry;
+import org.openqa.selenium.devtools.v142.network.Network;
+import org.openqa.selenium.devtools.v142.network.model.Request;
+import org.openqa.selenium.devtools.v142.network.model.RequestWillBeSent;
+import org.openqa.selenium.devtools.v142.network.model.ResponseReceived;
 import org.openqa.selenium.logging.HasLogEvents;
 import org.testng.annotations.Test;
 
@@ -213,7 +213,13 @@ public class ChromeDevToolsTests extends AbstractWebDriverTest implements Chrome
 
         List<ResponseReceived> responseReceivedList = new ArrayList<>();
         List<RequestWillBeSent> requestList = new ArrayList<>();
-        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+        devTools.send(Network.enable(
+                Optional.empty(),
+                Optional.empty(),
+                Optional.empty(),
+                Optional.empty(),
+                Optional.empty())
+        );
 
         devTools.addListener(Network.responseReceived(), response -> responseReceivedList.add(response));
         devTools.addListener(Network.requestWillBeSent(), request -> requestList.add(request));
@@ -241,7 +247,7 @@ public class ChromeDevToolsTests extends AbstractWebDriverTest implements Chrome
     /**
      * This test calls the page https://weatherstack.com/ which uses your local IP address to show your local weather.
      * With the help of the Request fetcher you can modify the request to change to IP address.
-     *
+     * <p>
      * See details at https://chromedevtools.github.io/devtools-protocol/tot/Fetch/
      */
     @Test

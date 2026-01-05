@@ -104,8 +104,9 @@ public class ByImage extends By {
         }
 
         ScreenLocation center = imageRegion.getCenter();
-        this.center.x = center.getX();
-        this.center.y = center.getY();
+        this.center = new Point(center.getX(), center.getY());
+//        this.center.x = center.getX();
+//        this.center.y = center.getY();
         driver.switchTo().defaultContent();
         WebElement webElement = WebDriverUtils.findElementByLocation(driver, this.center.x, this.center.y); // x and y are switched
 
@@ -123,8 +124,12 @@ public class ByImage extends By {
 
                 // calculate offset
                 Point location = webElement.getLocation();
-                this.center.x -= location.getX();
-                this.center.y -= location.getY();
+                this.center = new Point(
+                        this.center.x - location.getX(),
+                        this.center.y - location.getY()
+                );
+//                this.center.x -= location.getX();
+//                this.center.y -= location.getY();
 
                 driver.switchTo().frame(webElement);
                 webElement = WebDriverUtils.findElementByLocation(driver, this.center.x, this.center.y);
