@@ -50,14 +50,14 @@
             <mdc-top-app-bar-section end
                                      role="toolbar"
             >
-                <a href="http://docs.testerra.io/testerra/${_executionContext.runConfig.buildInformation.buildVersion}/index.html"
-                   title="Documentation"
-                   class="mdc-top-app-bar__action-item"
-                   rel="noopener"
-                   role="button"
-                   mdc-body2
-                   if.bind="_router.currentInstruction.config.route != 'printable'"
-                >${_executionContext.runConfig.buildInformation.buildVersion}</a>
+<!--                <a href="http://docs.testerra.io/testerra/${_executionContext.runConfig.buildInformation.buildVersion}/index.html"-->
+<!--                   title="Documentation"-->
+<!--                   class="mdc-top-app-bar__action-item"-->
+<!--                   rel="noopener"-->
+<!--                   role="button"-->
+<!--                   mdc-body2-->
+<!--                   if.bind="_router.currentInstruction.config.route != 'printable'"-->
+<!--                >${_executionContext.runConfig.buildInformation.buildVersion}</a>-->
             </mdc-top-app-bar-section>
 
         </mdc-top-app-bar-row>
@@ -80,13 +80,28 @@
                         <span if.bind="nav.settings.count>0">(${nav.settings.count})</span>
                     </mdc-list-item>
                 </mdc-list>
+                <div class="menu-footer">
+                    <div class="p1">
+                        <button mdc-button outlined click.delegate="_printButtonClicked()">
+                            <mdc-icon>print</mdc-icon>
+                            Print Report
+                        </button>
+                    </div>
+                    <ul class="mdc-list mdc-list--dense secondary" mdc-caption>
+                        <li class="mdc-custom-list-item">Created with&nbsp;
+                            <a href="http://docs.testerra.io/testerra/${_executionContext.runConfig.buildInformation.buildVersion}/index.html"
+                                                            title="Documentation"
+                                                            rel="noopener"
+                                                            if.bind="_router.currentInstruction.config.route != 'printable'"
+                        >Testerra ${_executionContext.runConfig.buildInformation.buildVersion}</a>
+                        </li>
+                        <li class="mdc-custom-list-item" if.bind="_executionContext.runConfig.buildInformation.buildVersion.includes('SNAPSHOT')">${_executionContext.runConfig.buildInformation.buildTimestamp}</li>
+                    </ul>
+                </div>
+
             </mdc-drawer-content>
-            <div class="button-container">
-                <button mdc-button outlined click.delegate="_printButtonClicked()">
-                    <mdc-icon>print</mdc-icon>
-                    Print Report
-                </button>
-            </div>
+
+
         </mdc-drawer>
 
         <mdc-drawer-app-content id="mdc-drawer-app-content">
