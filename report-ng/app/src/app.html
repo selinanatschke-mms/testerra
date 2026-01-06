@@ -88,12 +88,11 @@
                         </button>
                     </div>
                     <ul class="mdc-list mdc-list--dense secondary" mdc-caption>
-                        <li class="mdc-custom-list-item">Created with&nbsp;
+                        <li class="mdc-custom-list-item wrapable">Created with Testerra ${_executionContext.runConfig.buildInformation.buildVersion}&nbsp;
                             <a href="http://docs.testerra.io/testerra/${_executionContext.runConfig.buildInformation.buildVersion}/index.html"
                                                             title="Documentation"
                                                             rel="noopener"
-                                                            if.bind="_router.currentInstruction.config.route != 'printable'"
-                        >Testerra ${_executionContext.runConfig.buildInformation.buildVersion}</a>
+                        ><mdc-icon style="font-size: 18px;">open_in_new</mdc-icon></a>
                         </li>
                         <li class="mdc-custom-list-item" if.bind="_executionContext.runConfig.buildInformation.buildVersion.includes('SNAPSHOT')">${_executionContext.runConfig.buildInformation.buildTimestamp}</li>
                     </ul>

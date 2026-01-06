@@ -50,7 +50,7 @@ export class Timings {
                 name: "sessions",
                 title: 'Sessions',
                 settings: {
-                    icon: "open_in_new_down",
+                    icon: "devices",
                 }
             },
         ]);
