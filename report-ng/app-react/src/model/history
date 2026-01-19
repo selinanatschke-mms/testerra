@@ -1,0 +1,470 @@
+
+şO‘
+"
+15¥¦ÀŠ²3DEFAULT âÊ¿Š²3(ô£ÀŠ²3:k
+DEFAULTS
+11Linux5.15.0-107-generic"root*2-474-SNAPSHOT2Wed May 28 13:37:48 UTC 2025Test report3
+14-
+'
+14•¥ÀŠ²3Gradle suite ÖÎ¿Š²3(Ú£ÀŠ²3:15"2
+16,
+&
+16Ñ¥ÀŠ²3Gradle test ÖÎ¿Š²3(Ú£ÀŠ²3:14*W
+17Q
+2
+17Õ¥ÀŠ²3RunTesterraCucumberTest ØÎ¿Š²3(Ú£ÀŠ²3:RunTesterraCucumberTestJ16*[
+28U
+6
+28ú¥ÀŠ²3tests related to @Fails tag ´Ğ¿Š²3(şÑ¿Š²3:RunTesterraCucumberTestJ16*M
+44G
+(
+44ÿ¥ÀŠ²3google search ´Ğ¿Š²3(Î£ÀŠ²3:RunTesterraCucumberTestJ162q
+1l
+$
+1æ¥ÀŠ²3
+setUpClass ØÎ¿Š²3(Ğ¿Š²38Xz17º13Ò
+Setup
+InternalØÎ¿Š²3Ò
+
+TearDownˆÿÿÿÿÿÿÿÿÿ2‹
+2…
+#
+2ú¥ÀŠ²3	scenarios †Ğ¿Š²3(‰Ğ¿Š²38Xz17º8º3º10º9º12º7º11Ò
+Setup
+Internal‡Ğ¿Š²3Ò
+
+TearDownˆÿÿÿÿÿÿÿÿÿ2u
+13o
+(
+13ú¥ÀŠ²3tearDownClass Ò£ÀŠ²3(Ú£ÀŠ²38Xz17º1Ò
+Setup
+InternalÒ£ÀŠ²3Ò
+
+TearDownˆÿÿÿÿÿÿÿÿÿ2³
+3­
+%
+3ú¥ÀŠ²3runScenario ´Ğ¿Š²3(şÑ¿Š²38Xz28º2Ò
+Setup
+Internal·Ğ¿Š²3Ò)
+the user does a step
+InternalµÑ¿Š²3Ò`
+it failsT
+Internal»Ñ¿Š²3:A*?Z9
+java.lang.AssertionErrorThis step is supposed to failj32Ò
+
+TearDownˆš 
+arg0"basic failing scenario"š%
+arg1"tests related to @Fails tag"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²"scenario: "basic failing scenario"2â
+8Ü
+%
+8ú¥ÀŠ²3runScenario µĞ¿Š²3(ñÑ¿Š²38X	z28º2Ò
+Setup
+Internal¾Ğ¿Š²3Ò)
+the user does a step
+Internal¹Ñ¿Š²3Ò2
+it doesn't fails unexpectedly
+InternalºÑ¿Š²3Ò
+
+TearDownˆÿÿÿÿÿÿÿÿÿš,
+arg0$"successful expected failing search"š%
+arg1"tests related to @Fails tag"ª9
+3eu.tsystems.mms.tic.testframework.annotations.Fails{}ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}².scenario: "successful expected failing search"2„
+6ş
+
+6ÿ¥ÀŠ²3runScenario µĞ¿Š²38X
+z28Ò
+Setup
+Internal»Ğ¿Š²3Ò)
+the user does a step
+InternalµÑ¿Š²3Ò
+it fails expectedlyj
+Internal»Ñ¿Š²3:W*UZO
+java.lang.AssertionError3This step is supposed to fail with an expected failj89Ò
+
+TearDownˆ
+š<
+arg04"scenario with fails on failing step implementation"š%
+arg1"tests related to @Fails tag"ª
+3eu.tsystems.mms.tic.testframework.annotations.FailsH{"description":"This is supposed to fail","ticketString":"TESTID-12345"}ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²>scenario: "scenario with fails on failing step implementation"2’
+5Œ
+
+5ÿ¥ÀŠ²3runScenario µĞ¿Š²38Xz28Ò
+Setup
+InternalºĞ¿Š²3Ò)
+the user does a step
+Internal·Ñ¿Š²3Ò`
+it failsT
+Internal»Ñ¿Š²3:A*?Z9
+java.lang.AssertionErrorThis step is supposed to failj95Ò
+
+TearDownˆ
+š7
+arg0/"expected failing search with Fails Annotation"š%
+arg1"tests related to @Fails tag"ª9
+3eu.tsystems.mms.tic.testframework.annotations.Fails{}ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²9scenario: "expected failing search with Fails Annotation"2õ
+4ï
+
+4ÿ¥ÀŠ²3runScenario ¶Ğ¿Š²38Xz28Ò
+Setup
+Internal¹Ğ¿Š²3Òa
+it failsU
+Internal¶Ñ¿Š²3:B*@Z9
+java.lang.AssertionErrorThis step is supposed to failj100Ò
+
+TearDownˆ
+š>
+arg06"failing scenario with fails tag and no fails on step"š%
+arg1"tests related to @Fails tag"ª9
+3eu.tsystems.mms.tic.testframework.annotations.Fails{}ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²@scenario: "failing scenario with fails tag and no fails on step"2¯
+
+12¨
+
+&
+12…¦ÀŠ²3runScenario ´Ğ¿Š²3(Í£ÀŠ²38Xz44º2Ò
+Setup
+InternalÃĞ¿Š²3Ò7
+"the user searches for "tagesschau"
+Internal¹Ñ¿Š²3Òá
+"an entry for "Tagesschau" is shownº
+Internal¦£ÀŠ²3:¦*£Z]
+;eu.tsystems.mms.tic.testframework.exceptions.SetupExceptionError starting browser sessionZœ
+.org.openqa.selenium.SessionNotCreatedExceptionéCould not start a new session. Possible causes are invalid address of the remote server or browser start-up failure. 
+Host info: host: 'W4DEUMSY9001016', ip: '192.168.178.104'
+Build info: version: '4.28.1', revision: '73f5ad48a2'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.6'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--no-sandbox], extensions: []}}]}]
+Capabilities {browserName: chrome, goog:chromeOptions: {args: [--no-sandbox], extensions: []}}Z9
+java.io.UncheckedIOExceptionjava.net.ConnectExceptionZ
+java.net.ConnectExceptionZ
+java.net.ConnectExceptionZ*
+(java.nio.channels.ClosedChannelExceptionj62Ò
+
+TearDownˆš
+arg0"search many things"š
+arg1"google search"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²scenario: "search many things"2Ô
+
+9Î
+
+%
+9…¦ÀŠ²3runScenario ´Ğ¿Š²3(Ì£ÀŠ²38Xz44º2Ò
+Setup
+Internal¿Ğ¿Š²3Ò:
+%the user searches for "T-Systems MMS"
+Internal¸Ñ¿Š²3Òõ
+6an entry for "T-Systems Multimedia Solutions" is shownº
+InternalŒ£ÀŠ²3:¦*£Z]
+;eu.tsystems.mms.tic.testframework.exceptions.SetupExceptionError starting browser sessionZœ
+.org.openqa.selenium.SessionNotCreatedExceptionéCould not start a new session. Possible causes are invalid address of the remote server or browser start-up failure. 
+Host info: host: 'W4DEUMSY9001016', ip: '192.168.178.104'
+Build info: version: '4.28.1', revision: '73f5ad48a2'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.6'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--no-sandbox], extensions: []}}]}]
+Capabilities {browserName: chrome, goog:chromeOptions: {args: [--no-sandbox], extensions: []}}Z9
+java.io.UncheckedIOExceptionjava.net.ConnectExceptionZ
+java.net.ConnectExceptionZ
+java.net.ConnectExceptionZ*
+(java.nio.channels.ClosedChannelExceptionj52Ò
+
+TearDownˆš$
+arg0"search something on google"š
+arg1"google search"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²&scenario: "search something on google"2Æ
+
+11¿
+
+&
+11…¦ÀŠ²3runScenario ´Ğ¿Š²3(Î£ÀŠ²38Xz44º2Ò
+Setup
+InternalÂĞ¿Š²3Ò6
+!the user searches for "Wikipedia"
+Internal¸Ñ¿Š²3Òù
+:an entry for "Wikipedia, die freie EnzyklopÃ¤die" is shownº
+Internal‹£ÀŠ²3:¦*£Z]
+;eu.tsystems.mms.tic.testframework.exceptions.SetupExceptionError starting browser sessionZœ
+.org.openqa.selenium.SessionNotCreatedExceptionéCould not start a new session. Possible causes are invalid address of the remote server or browser start-up failure. 
+Host info: host: 'W4DEUMSY9001016', ip: '192.168.178.104'
+Build info: version: '4.28.1', revision: '73f5ad48a2'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.6'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--no-sandbox], extensions: []}}]}]
+Capabilities {browserName: chrome, goog:chromeOptions: {args: [--no-sandbox], extensions: []}}Z9
+java.io.UncheckedIOExceptionjava.net.ConnectExceptionZ
+java.net.ConnectExceptionZ
+java.net.ConnectExceptionZ*
+(java.nio.channels.ClosedChannelExceptionj82Ò
+
+TearDownˆš
+arg0"search many things"š
+arg1"google search"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²scenario: "search many things"2¨
+
+10¡
+
+&
+10…¦ÀŠ²3runScenario ´Ğ¿Š²3(É£ÀŠ²38Xz44º2Ò
+Setup
+InternalÁĞ¿Š²3Ò3
+the user searches for "foobar"
+Internal¶Ñ¿Š²3ÒŞ
+an entry for "Invalid" is shownº
+InternalŠ£ÀŠ²3:¦*£Z]
+;eu.tsystems.mms.tic.testframework.exceptions.SetupExceptionError starting browser sessionZœ
+.org.openqa.selenium.SessionNotCreatedExceptionéCould not start a new session. Possible causes are invalid address of the remote server or browser start-up failure. 
+Host info: host: 'W4DEUMSY9001016', ip: '192.168.178.104'
+Build info: version: '4.28.1', revision: '73f5ad48a2'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.6'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--no-sandbox], extensions: []}}]}]
+Capabilities {browserName: chrome, goog:chromeOptions: {args: [--no-sandbox], extensions: []}}Z9
+java.io.UncheckedIOExceptionjava.net.ConnectExceptionZ
+java.net.ConnectExceptionZ
+java.net.ConnectExceptionZ*
+(java.nio.channels.ClosedChannelExceptionj41Ò
+
+TearDownˆš
+arg0"search many things"š
+arg1"google search"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²scenario: "search many things"2Ó
+
+7Í
+
+%
+7…¦ÀŠ²3runScenario µĞ¿Š²3(Î£ÀŠ²38Xz44º2Ò
+Setup
+Internal¼Ğ¿Š²3Ò2
+the user searches for "heise"
+Internal·Ñ¿Š²3ÒŒ
+Man entry for "heise online - IT-News, Nachrichten und HintergrÃ¼nde" is shownº
+Internal”£ÀŠ²3:¦*£Z]
+;eu.tsystems.mms.tic.testframework.exceptions.SetupExceptionError starting browser sessionZœ
+.org.openqa.selenium.SessionNotCreatedExceptionéCould not start a new session. Possible causes are invalid address of the remote server or browser start-up failure. 
+Host info: host: 'W4DEUMSY9001016', ip: '192.168.178.104'
+Build info: version: '4.28.1', revision: '73f5ad48a2'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.6'
+Driver info: org.openqa.selenium.remote.RemoteWebDriver
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--no-sandbox], extensions: []}}]}]
+Capabilities {browserName: chrome, goog:chromeOptions: {args: [--no-sandbox], extensions: []}}Z9
+java.io.UncheckedIOExceptionjava.net.ConnectExceptionZ
+java.net.ConnectExceptionZ
+java.net.ConnectExceptionZ*
+(java.nio.channels.ClosedChannelExceptionj72Ò
+
+TearDownˆš
+arg0"search many things"š
+arg1"google search"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²scenario: "search many things"
+¿9‘
+"
+20ÆáÆŠ²3DEFAULT ÍÅŠ²3(ÚŞÆŠ²3:k
+DEFAULTS
+11Linux5.15.0-107-generic"root*2-474-SNAPSHOT2Wed May 28 13:37:48 UTC 2025Test report3
+19-
+'
+19äßÆŠ²3Gradle suite ÍÑÅŠ²3(ÓŞÆŠ²3:20"2
+21,
+&
+21 àÆŠ²3Gradle test ÍÑÅŠ²3(ÓŞÆŠ²3:19*W
+22Q
+2
+22¤àÆŠ²3RunTesterraCucumberTest ÎÑÅŠ²3(ÓŞÆŠ²3:RunTesterraCucumberTestJ21*[
+33U
+6
+33—áÆŠ²3tests related to @Fails tag şÒÅŠ²3(¾ÔÅŠ²3:RunTesterraCucumberTestJ21*M
+57G
+(
+57›áÆŠ²3google search ÿÒÅŠ²3(ÇŞÆŠ²3:RunTesterraCucumberTestJ212q
+1l
+$
+1¾àÆŠ²3
+setUpClass ÏÑÅŠ²3(ãÒÅŠ²38Xz22º18Ò
+Setup
+InternalÔÑÅŠ²3Ò
+
+TearDownˆÿÿÿÿÿÿÿÿÿ2ˆ
+2‚
+#
+2—áÆŠ²3	scenarios êÒÅŠ²3(ìÒÅŠ²38Xz22º8º5º9º4º7º3º6Ò
+Setup
+InternalëÒÅŠ²3Ò
+
+TearDownˆÿÿÿÿÿÿÿÿÿ2u
+18o
+(
+18—áÆŠ²3tearDownClass ÊŞÆŠ²3(ÓŞÆŠ²38Xz22º1Ò
+Setup
+InternalÊŞÆŠ²3Ò
+
+TearDownˆÿÿÿÿÿÿÿÿÿ2•
+12
+
+12˜áÆŠ²3runScenario ÿÒÅŠ²38Xz33Ò
+Setup
+Internal‰ÓÅŠ²3Ò)
+the user does a step
+Internal…ÔÅŠ²3Òa
+it failsU
+Internal‡ÔÅŠ²3:B*@Z9
+java.lang.AssertionErrorThis step is supposed to failj129Ò
+
+TearDownˆ
+š7
+arg0/"expected failing search with Fails Annotation"š%
+arg1"tests related to @Fails tag"ª9
+3eu.tsystems.mms.tic.testframework.annotations.Fails{}ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²9scenario: "expected failing search with Fails Annotation"2‡
+11€
+
+11šáÆŠ²3runScenario ÿÒÅŠ²38Xz33Ò
+Setup
+Internal‰ÓÅŠ²3Ò)
+the user does a step
+Internal„ÔÅŠ²3Ò‚
+it fails expectedlyk
+InternalˆÔÅŠ²3:X*VZO
+java.lang.AssertionError3This step is supposed to fail with an expected failj135Ò
+
+TearDownˆ
+š<
+arg04"scenario with fails on failing step implementation"š%
+arg1"tests related to @Fails tag"ª
+3eu.tsystems.mms.tic.testframework.annotations.FailsH{"description":"This is supposed to fail","ticketString":"TESTID-12345"}ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²>scenario: "scenario with fails on failing step implementation"2÷
+10ğ
+
+10›áÆŠ²3runScenario ÿÒÅŠ²38Xz33Ò
+Setup
+Internal‡ÓÅŠ²3Òa
+it failsU
+Internal†ÔÅŠ²3:B*@Z9
+java.lang.AssertionErrorThis step is supposed to failj140Ò
+
+TearDownˆ
+š>
+arg06"failing scenario with fails tag and no fails on step"š%
+arg1"tests related to @Fails tag"ª9
+3eu.tsystems.mms.tic.testframework.annotations.Fails{}ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²@scenario: "failing scenario with fails tag and no fails on step"2â
+8Ü
+%
+8›áÆŠ²3runScenario ÿÒÅŠ²3(´ÔÅŠ²38X	z33º2Ò
+Setup
+Internal„ÓÅŠ²3Ò)
+the user does a step
+Internal†ÔÅŠ²3Ò2
+it doesn't fails unexpectedly
+Internal‰ÔÅŠ²3Ò
+
+TearDownˆÿÿÿÿÿÿÿÿÿš,
+arg0$"successful expected failing search"š%
+arg1"tests related to @Fails tag"ª9
+3eu.tsystems.mms.tic.testframework.annotations.Fails{}ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}².scenario: "successful expected failing search"2³
+5­
+%
+5›áÆŠ²3runScenario ÿÒÅŠ²3(¾ÔÅŠ²38Xz33º2Ò
+Setup
+Internal‚ÓÅŠ²3Ò)
+the user does a step
+Internal…ÔÅŠ²3Ò`
+it failsT
+InternalˆÔÅŠ²3:A*?Z9
+java.lang.AssertionErrorThis step is supposed to failj37Ò
+
+TearDownˆš 
+arg0"basic failing scenario"š%
+arg1"tests related to @Fails tag"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²"scenario: "basic failing scenario"2”
+3
+%
+3¢áÆŠ²3runScenario ÿÒÅŠ²3(šĞÆŠ²38Xz57º2Ò
+Setup
+Internal€ÓÅŠ²3Ò2
+the user searches for "heise"
+Internal„ÔÅŠ²3ÒÍ
+Man entry for "heise online - IT-News, Nachrichten und HintergrÃ¼nde" is shownû
+InternalÛÀÆŠ²3:ç*äZ\
+=eu.tsystems.mms.tic.testframework.exceptions.TimeoutExceptionSequence timed out after 8sZ–
+Eeu.tsystems.mms.tic.testframework.exceptions.ElementNotFoundExceptionMGoogleSearchPage -> inputSearch(By.xpath: //input[@title='Suche']): not foundZf
+java.lang.AssertionErrorJExpected that total elements [0] filtered [0] is greater or equal than [1]j103Ò
+
+TearDownˆš
+arg0"search many things"š
+arg1"google search"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²scenario: "search many things"2„
+9ş
+%
+9¤áÆŠ²3runScenario ÿÒÅŠ²3(ƒÆÆŠ²38Xz57º2Ò
+Setup
+Internal†ÓÅŠ²3Ò6
+!the user searches for "Wikipedia"
+InternalƒÔÅŠ²3Ò¹
+:an entry for "Wikipedia, die freie EnzyklopÃ¤die" is shownú
+InternalÀÀÆŠ²3:æ*ãZ\
+=eu.tsystems.mms.tic.testframework.exceptions.TimeoutExceptionSequence timed out after 8sZ–
+Eeu.tsystems.mms.tic.testframework.exceptions.ElementNotFoundExceptionMGoogleSearchPage -> inputSearch(By.xpath: //input[@title='Suche']): not foundZf
+java.lang.AssertionErrorJExpected that total elements [0] filtered [0] is greater or equal than [1]j51Ò
+
+TearDownˆš
+arg0"search many things"š
+arg1"google search"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²scenario: "search many things"2•
+6
+%
+6¥áÆŠ²3runScenario ÿÒÅŠ²3(ÇŞÆŠ²38X
+z57º2Ò
+Setup
+InternalƒÓÅŠ²3Ò:
+%the user searches for "T-Systems MMS"
+Internal†ÔÅŠ²3Ò¶
+6an entry for "T-Systems Multimedia Solutions" is shownû
+InternalÎÀÆŠ²3:ç*äZ\
+=eu.tsystems.mms.tic.testframework.exceptions.TimeoutExceptionSequence timed out after 8sZ–
+Eeu.tsystems.mms.tic.testframework.exceptions.ElementNotFoundExceptionMGoogleSearchPage -> inputSearch(By.xpath: //input[@title='Suche']): not foundZf
+java.lang.AssertionErrorJExpected that total elements [0] filtered [0] is greater or equal than [1]j120Ò
+
+TearDownˆš$
+arg0"search something on google"š
+arg1"google search"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²&scenario: "search something on google"2æ
+7à
+%
+7¥áÆŠ²3runScenario ÿÒÅŠ²3(óÍÆŠ²38Xz57º2Ò
+Setup
+Internal„ÓÅŠ²3Ò3
+the user searches for "foobar"
+Internal„ÔÅŠ²3Ò
+an entry for "Invalid" is shownú
+InternalÚÀÆŠ²3:æ*ãZ\
+=eu.tsystems.mms.tic.testframework.exceptions.TimeoutExceptionSequence timed out after 8sZ–
+Eeu.tsystems.mms.tic.testframework.exceptions.ElementNotFoundExceptionMGoogleSearchPage -> inputSearch(By.xpath: //input[@title='Suche']): not foundZf
+java.lang.AssertionErrorJExpected that total elements [0] filtered [0] is greater or equal than [1]j86Ò
+
+TearDownˆš
+arg0"search many things"š
+arg1"google search"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²scenario: "search many things"2í
+4ç
+%
+4¦áÆŠ²3runScenario ÿÒÅŠ²3(ùËÆŠ²38Xz57º2Ò
+Setup
+InternalÓÅŠ²3Ò7
+"the user searches for "tagesschau"
+Internal…ÔÅŠ²3Ò¡
+"an entry for "Tagesschau" is shownú
+InternalÚÀÆŠ²3:æ*ãZ\
+=eu.tsystems.mms.tic.testframework.exceptions.TimeoutExceptionSequence timed out after 8sZ–
+Eeu.tsystems.mms.tic.testframework.exceptions.ElementNotFoundExceptionMGoogleSearchPage -> inputSearch(By.xpath: //input[@title='Suche']): not foundZf
+java.lang.AssertionErrorJExpected that total elements [0] filtered [0] is greater or equal than [1]j69Ò
+
+TearDownˆš
+arg0"search many things"š
+arg1"google search"ªH
+org.testng.annotations.Test){"description":"Runs Cucumber Scenarios"}²scenario: "search many things"
