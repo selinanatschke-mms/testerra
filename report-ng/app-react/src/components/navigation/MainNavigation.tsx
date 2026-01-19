@@ -1,0 +1,140 @@
+import {type RouteHandle, routesConfig} from "../../router/mainRouter.tsx";
+import {Link, useLocation} from "react-router-dom";
+import Toolbar from "@mui/material/Toolbar";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Drawer, {drawerClasses} from "@mui/material/Drawer";
+
+import {useEffect} from "react";
+import styled from "@emotion/styled";
+import {Divider, ListItemIcon, Typography} from "@mui/material";
+import logo from "../../assets/logo.png";
+import "./MainNavigation.css";
+import { blueGrey } from "@mui/material/colors";
+
+const drawerWidth = 240;
+
+const MenuDrawer = styled(Drawer)({
+    width: drawerWidth,
+    flexShrink: 0,
+    boxSizing: 'border-box',
+    mt: 10,
+    [`& .${drawerClasses.paper}`]: {
+        width: drawerWidth,
+        boxSizing: 'border-box',
+    },
+});
+
+const MainNavigation = () => {
+
+    // https://mui.com/material-ui/react-drawer/#clipped-under-the-app-bar
+    // https://mui.com/material-ui/react-drawer/#responsive-drawer
+
+    const menuRoutes = routesConfig[0].children || [];
+    const location = useLocation();
+
+    const itemClasses = {
+        selectedItem: {
+            // backgroundColor: theme.palette.grey["400"],
+            backgroundColor: blueGrey[100],
+            color: blueGrey[800],
+            pointerEvents: "none"
+        },
+        unSelectedItem: {
+            // color: theme.palette.primary.contrastText,
+            // backgroundColor: "#2b2b35"
+        }
+    }
+
+
+    useEffect(() => {
+        console.log('Pfad hat sich geändert zu:', location.pathname);
+        console.table(location); // Zeigt die Daten schick als Tabelle an
+    }, [location]);
+
+    return (
+        <>
+            <MenuDrawer
+                variant="permanent"
+                sx={{
+                    display: {xs: 'none', md: 'block'},
+                    [`& .${drawerClasses.paper}`]: {
+                        backgroundColor: 'background.paper',
+                    },
+                }}
+            >
+
+                <Box>
+
+                    <Toolbar
+                        sx={{
+                            backgroundColor: 'primary.main',
+                            color: 'primary.contrastText',
+                        }}
+                    >
+                        <img src={logo} className="logo" alt="Testerra report"/>
+                        <Typography variant="h6" sx={{pl: 1}}>Test project</Typography>
+                    </Toolbar>
+                </Box>
+
+                <Box
+                    sx={{
+                        overflow: 'auto',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        backgroundColor: 'grey.100'
+                    }}
+                >
+                    <List>
+                        <ListItem>
+                            <ListItemText>Regression</ListItemText>
+                        </ListItem>
+                    </List>
+                    <Divider/>
+                    <List>
+                        {menuRoutes
+                            .filter((route) => (route.handle as RouteHandle)?.show)
+                            .map((route, index) => {
+                                const path = route.index ? "/" : `/${route.path}`;
+                                const label = (route.handle as RouteHandle).label;
+                                const icon = (route.handle as RouteHandle).icon;
+                                return (
+                                    <ListItem
+                                        disablePadding
+                                        qa-item={'menu-' + label}
+                                        key={index}
+                                        sx={
+                                            location.pathname === path
+                                                ? itemClasses.selectedItem
+                                                : itemClasses.unSelectedItem
+                                        }
+                                    >
+                                        <ListItemButton
+                                            component={Link}
+                                            to={path}
+                                        >
+                                            <ListItemIcon
+                                                sx={
+                                                    location.pathname === path
+                                                        ? itemClasses.selectedItem
+                                                        : itemClasses.unSelectedItem
+                                                }
+                                            >{icon}</ListItemIcon>
+                                            <ListItemText primary={label}/>
+                                        </ListItemButton>
+                                    </ListItem>
+                                );
+                            })
+                        }
+                    </List>
+
+                </Box>
+            </MenuDrawer>
+        </>
+    );
+};
+export default MainNavigation;
