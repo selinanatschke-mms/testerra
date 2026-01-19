@@ -13,9 +13,10 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@fontsource/roboto": "^5.2.9",
     "@mui/icons-material": "^7.3.6",
     "@mui/material": "^7.3.6",
-    "@fontsource/roboto": "^5.2.9",
+    "echarts-for-react": "^3.0.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-query": "^3.39.3",

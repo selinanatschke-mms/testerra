@@ -1,7 +1,19 @@
 import {createTheme} from "@mui/material";
 
+const graphColors = {
+    passed: '#417336',
+    skipped: '#f7af3e',
+    failed: '#e63946',
+    crashed: '#5d6f81',
+    running: '#0089b6',
+    failed_minor: '#f7af3e',
+    expected_failed: '#4f031b'
+}
 
 export const reportTheme = createTheme({
+    custom: {
+        graphColors,
+    },
     cssVariables: {
         nativeColor: true,
     },
@@ -17,3 +29,35 @@ export const reportTheme = createTheme({
         }
     },
 });
+
+declare module "@mui/material/styles" {
+    // expand theme to add "custom" (necessary to use colors from theme in other files)
+    interface Theme {
+        custom: {
+            graphColors: {
+                passed: string;
+                skipped: string;
+                failed: string;
+                crashed: string;
+                running: string;
+                failed_minor: string;
+                expected_failed: string;
+            };
+        };
+    }
+
+    // expand "ThemeOptions" to add "graphColors"
+    interface ThemeOptions {
+        custom?: {
+            graphColors?: {
+                passed?: string;
+                skipped?: string;
+                failed?: string;
+                crashed?: string;
+                running?: string;
+                failed_minor?: string;
+                expected_failed?: string;
+            };
+        };
+    }
+}
