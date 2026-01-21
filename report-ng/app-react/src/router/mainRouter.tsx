@@ -5,6 +5,7 @@ import About from "../pages/About.tsx";
 import Tests from "../pages/Tests.tsx";
 import TimingsPage from "../pages/TimingsPage.tsx";
 import Dashboard from "../pages/Dashboard.tsx";
+import MethodDetailsPage from "../pages/MethodDetailsPage.tsx";
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
@@ -62,6 +63,10 @@ export const routesConfig: RouteObject[] = [
                     },
                 ]
             },
+            {
+                path: "method/:methodId",
+                element: <MethodDetailsPage />
+            }
         ],
     },
 ];
