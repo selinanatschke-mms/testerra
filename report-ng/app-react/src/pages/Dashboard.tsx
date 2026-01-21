@@ -52,7 +52,7 @@ const Dashboard = () => {
                                     </ListItemButton>
                                 </ListItem>
                                 <ListItem disablePadding>
-                                    <ListItemButton component="a" href="#simple-list">
+                                    <ListItemButton>
                                         <ListItemIcon>
                                             <CancelIcon sx={{color: theme.custom.graphColors.expected_failed}}/>
                                         </ListItemIcon>
