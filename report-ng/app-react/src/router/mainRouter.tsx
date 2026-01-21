@@ -1,10 +1,10 @@
 
 import {createHashRouter, type RouteObject, Navigate} from 'react-router-dom';
 import MainLayout from "../layout/MainLayout.tsx";
-import About from "../pages/About.tsx";
-import Tests from "../pages/Tests.tsx";
+import AboutPage from "../pages/AboutPage.tsx";
+import TestsPage from "../pages/TestsPage.tsx";
 import TimingsPage from "../pages/TimingsPage.tsx";
-import Dashboard from "../pages/Dashboard.tsx";
+import DashboardPage from "../pages/DashboardPage.tsx";
 import MethodDetailsPage from "../pages/MethodDetailsPage.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
 
@@ -15,6 +15,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ListIcon from '@mui/icons-material/List';
 import type {JSX} from "react";
 import TestTimings from "../components/timings-tab-components/test-timings";
+import SessionsPage from "../pages/SessionsPage";
 
 // Custom attributes for menu elements
 export interface RouteHandle {
@@ -30,17 +31,17 @@ export const routesConfig: RouteObject[] = [
         children: [
             {
                 index: true,
-                element: <Dashboard/>,
+                element: <DashboardPage/>,
                 handle: {label: "Dashboard", show: true, icon: <HomeRoundedIcon />} as RouteHandle
             },
             {
                 path: "Tests",
-                element: <Tests/>,
+                element: <TestsPage/>,
                 handle: {label: "Tests", show: true, icon: <AnalyticsRoundedIcon />} as RouteHandle
             },
             {
                 path: "about",
-                element: <About/>,
+                element: <AboutPage/>,
                 handle: {label: "About", show: true, icon: <InfoRoundedIcon />} as RouteHandle
             },
             {
@@ -60,7 +61,7 @@ export const routesConfig: RouteObject[] = [
                     },
                     {
                         path: "sessions",
-                        element: <Dashboard/>,
+                        element: <SessionsPage/>,
                         handle: {label: "Sessions", show: true, icon: <OpenInNewIcon />} as RouteHandle
                     },
                 ]

@@ -23,7 +23,7 @@ const Item = styled('div')(({theme}) => ({
     }),
 }));
 
-const Dashboard = () => {
+const DashboardPage = () => {
     const theme = useTheme();
 
     return (
@@ -101,4 +101,4 @@ const Dashboard = () => {
         </Box>
     );
 };
-export default Dashboard;
+export default DashboardPage;
