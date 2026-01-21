@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactECharts from 'echarts-for-react';
 import {useTheme} from "@mui/material";
+import EChart from "../../widgets/echart/echart";
+import React from "react";
 
-const PieChart: React.FC = () => {
+const DashboardPieChart: React.FC = () => {
     const theme = useTheme();
 
     const option = {
@@ -30,7 +30,8 @@ const PieChart: React.FC = () => {
         ]
     };
 
-    return <ReactECharts option={option}/>;
+    return (
+        <EChart option={option}/>
+    );
 };
-
-export default PieChart;
+export default DashboardPieChart;

@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {styled} from "@mui/material/styles";
-import PieChart from "../components/pie-chart/pie-chart";
+import DashboardPieChart from "../components/dashboard-charts/dashboard-pie-chart";
 
 // TODO remove
 const Item = styled('div')(({theme}) => ({
@@ -74,7 +74,7 @@ const Dashboard = () => {
                         <CardContent
                             sx={{pt: 1, pb: 1}}
                         >
-                            <PieChart/>
+                            <DashboardPieChart />
                         </CardContent>
                     </Card>
 
