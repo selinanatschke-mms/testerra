@@ -1,0 +1,27 @@
+import {Card, CardContent, Divider, Typography} from "@mui/material";
+import type {SxProps, Theme} from '@mui/material/styles';
+
+export interface CardProps {
+    label: string;
+    children: any;
+    sx?: SxProps<Theme>;
+}
+
+const ReportCard = ({label, children, sx = {pt: 1, pb: 1}}: CardProps) => {
+
+    return (
+        <Card sx={{p: 0}}>
+            <CardContent
+                sx={{pt: 1, pb: 1}}
+            >
+                <Typography variant="h6">{label}</Typography>
+            </CardContent>
+            <Divider/>
+            <CardContent sx={sx}>
+                {children}
+            </CardContent>
+        </Card>
+    )
+};
+
+export default ReportCard;

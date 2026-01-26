@@ -1,8 +1,9 @@
 import {useTheme} from "@mui/material";
 import EChart from "../../widgets/echart/echart";
 import React from "react";
+import ReportCard from "../../widgets/report-card/report-card";
 
-const DashboardPieChart: React.FC = () => {
+const DashboardPieChartCard: React.FC = () => {
     const theme = useTheme();
 
     const option = {
@@ -31,7 +32,9 @@ const DashboardPieChart: React.FC = () => {
     };
 
     return (
-        <EChart option={option}/>
+        <ReportCard label="Breakdown">
+            <EChart option={option}/>
+        </ReportCard>
     );
 };
-export default DashboardPieChart;
+export default DashboardPieChartCard;
