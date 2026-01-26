@@ -2,6 +2,11 @@ import {Grid} from "@mui/material";
 import Box from "@mui/material/Box";
 import DashboardPieChartCard from "../components/dashboard-components/dashboard-pie-chart-card";
 import DashboardTestResultsCard from "../components/dashboard-components/dashboard-test-results-card";
+import DashboardFailureAspectsCard from "../components/dashboard-components/dashboard-failure-aspects-card";
+import DashboardFailureCorridorCard from "../components/dashboard-components/dashboard-failure-corridor-card";
+import Stack from '@mui/material/Stack';
+import DashboardDurationCard from "../components/dashboard-components/dashboard-duration-card";
+import DashboardClassesChartCard from "../components/dashboard-components/dashboard-classes-chart-card";
 
 const DashboardPage = () => {
     return (
@@ -14,10 +19,22 @@ const DashboardPage = () => {
                 columns={12}
             >
                 <Grid size={3}>
-                    <DashboardTestResultsCard/>
+                    <Stack direction="column" spacing={2}>
+                        <DashboardTestResultsCard/>
+                        <DashboardDurationCard/>
+                    </Stack>
                 </Grid>
                 <Grid size={3}>
                     <DashboardPieChartCard/>
+                </Grid>
+                <Grid size={6}>
+                    <Stack direction="column" spacing={2}>
+                        <DashboardFailureAspectsCard/>
+                        <DashboardFailureCorridorCard/>
+                    </Stack>
+                </Grid>
+                <Grid size={12}>
+                    <DashboardClassesChartCard/>
                 </Grid>
             </Grid>
         </Box>

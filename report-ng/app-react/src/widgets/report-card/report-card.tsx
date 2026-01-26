@@ -14,7 +14,7 @@ const ReportCard = ({label, children, sx = {pt: 1, pb: 1}}: CardProps) => {
             <CardContent
                 sx={{pt: 1, pb: 1}}
             >
-                <Typography variant="h6">{label}</Typography>
+                <Typography variant="subtitle2" color="primary">{label}</Typography>
             </CardContent>
             <Divider/>
             <CardContent sx={sx}>

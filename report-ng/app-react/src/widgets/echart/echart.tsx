@@ -4,11 +4,27 @@ import ReactECharts from 'echarts-for-react';
 
 export interface EChartProps {
     option: EChartsOption;
+    width?: number;
+    height?: number;
 }
 
-const EChart: React.FC<EChartProps> = ({option}) => {
+const EChart: React.FC<EChartProps> = ({option, width, height}) => {
+    const style: React.CSSProperties = {
+        ...(width !== undefined ? {width} : {}),
+        ...(height !== undefined ? {height} : {}),
+    };
+    const opts = {
+        ...(width !== undefined ? {width} : {}),
+        ...(height !== undefined ? {height} : {}),
+    };
 
-    return <ReactECharts option={option}/>;
+    // TODO fix resize
+
+    return (
+        <div style={style}>
+            <ReactECharts option={option} opts={opts} autoResize={false}/>
+        </div>
+    )
 };
 
 export default EChart;
