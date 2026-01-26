@@ -3,13 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import {useLocation, useNavigate} from "react-router-dom";
-import type { ReactElement } from "react";
-
-type TabConfig = {
-    label: string;
-    route: string;
-    icon: ReactElement;
-};
+import type { TabConfig } from "../../utils/generateTabsFromRoutes";
 
 interface TabNavigationProps {
     tabs: TabConfig[];

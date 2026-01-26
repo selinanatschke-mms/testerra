@@ -57,7 +57,7 @@ export const routesConfig: RouteObject[] = [
                     {
                         path: "test-timings",
                         element: <TestTimings/>,
-                        handle: {label: "Test Timings", show: true, icon: <ListIcon />} as RouteHandle
+                        handle: {label: "Tests", show: true, icon: <ListIcon />} as RouteHandle
                     },
                     {
                         path: "sessions",

@@ -1,16 +1,13 @@
 import Box from "@mui/material/Box";
 import TabNavigation from "../widgets/tab-navigation/tab-navigation";
 import {Outlet} from 'react-router-dom';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import ListIcon from '@mui/icons-material/List';
-
-// TODO get from router
-const tabs = [
-    {label: "Tests", route: "test-timings", icon: <ListIcon />},
-    {label: "Sessions", route: "sessions", icon: <OpenInNewIcon />}
-];
+import { generateTabsFromRoutes } from "../utils/generateTabsFromRoutes";
+import { routesConfig } from "../router/mainRouter.tsx";
 
 const TimingsPage = () => {
+
+    const timingsRoute = routesConfig[0].children?.find((route) => route.path === "timings");
+    const tabs = generateTabsFromRoutes(timingsRoute?.children);
 
     return (
         <Box sx={{width: '100%', p: '24px 32px'}}>
