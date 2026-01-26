@@ -1,6 +1,6 @@
 import {createTheme} from "@mui/material";
 
-const graphColors = {
+const statusColors = {
     passed: '#417336',
     skipped: '#f7af3e',
     failed: '#e63946',
@@ -12,7 +12,7 @@ const graphColors = {
 
 export const reportTheme = createTheme({
     custom: {
-        graphColors,
+        statusColors,
     },
     cssVariables: {
         nativeColor: true,
@@ -34,7 +34,7 @@ declare module "@mui/material/styles" {
     // expand theme to add "custom" (necessary to use colors from theme in other files)
     interface Theme {
         custom: {
-            graphColors: {
+            statusColors: {
                 passed: string;
                 skipped: string;
                 failed: string;
@@ -46,10 +46,10 @@ declare module "@mui/material/styles" {
         };
     }
 
-    // expand "ThemeOptions" to add "graphColors"
+    // expand "ThemeOptions" to add "statusColors"
     interface ThemeOptions {
         custom?: {
-            graphColors?: {
+            statusColors?: {
                 passed?: string;
                 skipped?: string;
                 failed?: string;

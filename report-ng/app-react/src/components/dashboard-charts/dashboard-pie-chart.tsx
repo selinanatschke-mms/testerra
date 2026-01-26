@@ -21,10 +21,10 @@ const DashboardPieChart: React.FC = () => {
                 type: 'pie',
                 radius: '50%',
                 data: [
-                    {value: 3, name: 'Passed', itemStyle: {color: theme.custom.graphColors.passed}},
-                    {value: 1, name: 'Failed', itemStyle: {color: theme.custom.graphColors.failed}},
-                    {value: 1, name: 'Expected Failed', itemStyle: {color: theme.custom.graphColors.expected_failed}},
-                    {value: 1, name: 'Skipped', itemStyle: {color: theme.custom.graphColors.skipped}},
+                    {value: 3, name: 'Passed', itemStyle: {color: theme.custom.statusColors.passed}},
+                    {value: 1, name: 'Failed', itemStyle: {color: theme.custom.statusColors.failed}},
+                    {value: 1, name: 'Expected Failed', itemStyle: {color: theme.custom.statusColors.expected_failed}},
+                    {value: 1, name: 'Skipped', itemStyle: {color: theme.custom.statusColors.skipped}},
                 ]
             }
         ]

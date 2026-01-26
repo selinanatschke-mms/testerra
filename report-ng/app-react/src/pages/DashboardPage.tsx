@@ -46,7 +46,7 @@ const DashboardPage = () => {
                                 <ListItem disablePadding>
                                     <ListItemButton>
                                         <ListItemIcon>
-                                            <CancelIcon sx={{color: theme.custom.graphColors.failed}}/>
+                                            <CancelIcon sx={{color: theme.custom.statusColors.failed}}/>
                                         </ListItemIcon>
                                         <ListItemText primary="1" secondary="Failed"/>
                                     </ListItemButton>
@@ -54,7 +54,7 @@ const DashboardPage = () => {
                                 <ListItem disablePadding>
                                     <ListItemButton>
                                         <ListItemIcon>
-                                            <CancelIcon sx={{color: theme.custom.graphColors.expected_failed}}/>
+                                            <CancelIcon sx={{color: theme.custom.statusColors.expected_failed}}/>
                                         </ListItemIcon>
                                         <ListItemText primary="1" secondary="Expected Failed"/>
                                     </ListItemButton>
