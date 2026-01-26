@@ -67,7 +67,7 @@ export const routesConfig: RouteObject[] = [
                 ]
             },
             {
-                path: "method/:methodId",
+                path: "method/:methodId?",
                 element: <MethodDetailsPage />
             },
             {

@@ -55,86 +55,93 @@ const MainNavigation = () => {
         console.table(location); // Zeigt die Daten schick als Tabelle an
     }, [location]);
 
+    const isRouteActive = (routePath: string): boolean => {
+        // check regex: path can either match exactly or start with a trailing "/" and further characters (prevents that "/" path is always highlighted or subroutes are not highlighted)
+        const regex = new RegExp(`^${routePath}(\\/.*)?$`);
+        return regex.test(location.pathname);
+    }
+
     return (
-        <>
-            <MenuDrawer
-                variant="permanent"
-                sx={{
-                    display: {xs: 'none', md: 'block'},
-                    [`& .${drawerClasses.paper}`]: {
-                        backgroundColor: 'background.paper',
-                    },
-                }}
-            >
+        <MenuDrawer
+            variant="permanent"
+            sx={{
+                display: {xs: 'none', md: 'block'},
+                [`& .${drawerClasses.paper}`]: {
+                    backgroundColor: 'background.paper',
+                },
+            }}
+        >
 
-                <Box>
+            <Box>
 
-                    <Toolbar
-                        sx={{
-                            backgroundColor: 'primary.main',
-                            color: 'primary.contrastText',
-                        }}
-                    >
-                        <img src={logo} className="logo" alt="Testerra report"/>
-                        <Typography variant="h6" sx={{pl: 1}}>Test project</Typography>
-                    </Toolbar>
-                </Box>
-
-                <Box
+                <Toolbar
                     sx={{
-                        overflow: 'auto',
-                        height: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        backgroundColor: 'grey.100'
+                        backgroundColor: 'primary.main',
+                        color: 'primary.contrastText',
                     }}
                 >
-                    <List>
-                        <ListItem>
-                            <ListItemText>Regression</ListItemText>
-                        </ListItem>
-                    </List>
-                    <Divider/>
-                    <List>
-                        {menuRoutes
-                            .filter((route) => (route.handle as RouteHandle)?.show)
-                            .map((route, index) => {
-                                const path = route.index ? "/" : `/${route.path}`;
-                                const label = (route.handle as RouteHandle).label;
-                                const icon = (route.handle as RouteHandle).icon;
-                                return (
-                                    <ListItem
-                                        disablePadding
-                                        qa-item={'menu-' + label}
-                                        key={index}
-                                        sx={
-                                            location.pathname === path
-                                                ? itemClasses.selectedItem
-                                                : itemClasses.unSelectedItem
-                                        }
-                                    >
-                                        <ListItemButton
-                                            component={Link}
-                                            to={path}
-                                        >
-                                            <ListItemIcon
-                                                sx={
-                                                    location.pathname === path
-                                                        ? itemClasses.selectedItem
-                                                        : itemClasses.unSelectedItem
-                                                }
-                                            >{icon}</ListItemIcon>
-                                            <ListItemText primary={label}/>
-                                        </ListItemButton>
-                                    </ListItem>
-                                );
-                            })
-                        }
-                    </List>
+                    <img src={logo} className="logo" alt="Testerra report"/>
+                    <Typography variant="h6" sx={{pl: 1}}>Test project</Typography>
+                </Toolbar>
+            </Box>
 
-                </Box>
-            </MenuDrawer>
-        </>
+            <Box
+                sx={{
+                    overflow: 'auto',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    backgroundColor: 'grey.100'
+                }}
+            >
+                <List>
+                    <ListItem>
+                        <ListItemText>Regression</ListItemText>
+                    </ListItem>
+                </List>
+                <Divider/>
+                <List>
+                    {menuRoutes
+                        .filter((route) => (route.handle as RouteHandle)?.show)
+                        .map((route, index) => {
+                            const path = route.index ? "/" : `/${route.path}`;
+                            const label = (route.handle as RouteHandle).label;
+                            const icon = (route.handle as RouteHandle).icon;
+
+                            const isActive = isRouteActive(path)     // important for subroute highlighting
+
+                            return (
+                                <ListItem
+                                    disablePadding
+                                    qa-item={'menu-' + label}
+                                    key={index}
+                                    sx={
+                                        isActive
+                                            ? itemClasses.selectedItem
+                                            : itemClasses.unSelectedItem
+                                    }
+                                >
+                                    <ListItemButton
+                                        component={Link}
+                                        to={path}
+                                    >
+                                        <ListItemIcon
+                                            sx={
+                                                location.pathname === path
+                                                    ? itemClasses.selectedItem
+                                                    : itemClasses.unSelectedItem
+                                            }
+                                        >{icon}</ListItemIcon>
+                                        <ListItemText primary={label}/>
+                                    </ListItemButton>
+                                </ListItem>
+                            );
+                        })
+                    }
+                </List>
+
+            </Box>
+        </MenuDrawer>
     );
 };
 export default MainNavigation;
