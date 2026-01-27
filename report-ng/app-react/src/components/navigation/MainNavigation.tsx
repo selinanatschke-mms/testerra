@@ -56,7 +56,8 @@ const MainNavigation = () => {
     }, [location]);
 
     const isRouteActive = (routePath: string): boolean => {
-        // check regex: path can either match exactly or start with a trailing "/" and further characters (prevents that "/" path is always highlighted or subroutes are not highlighted)
+        // check regex: path can either match exactly or start with a trailing "/" and further characters
+        // (prevents that "/" path is always highlighted or subroutes are not highlighted)
         const regex = new RegExp(`^${routePath}(\\/.*)?$`);
         return regex.test(location.pathname);
     }

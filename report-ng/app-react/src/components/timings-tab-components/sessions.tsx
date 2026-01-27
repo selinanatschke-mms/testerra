@@ -1,8 +1,8 @@
-const SessionsPage = () => {
+const Sessions = () => {
     return (
         <p>
             Here will be some session information. 
         </p>
     );
 };
-export default SessionsPage;
+export default Sessions;

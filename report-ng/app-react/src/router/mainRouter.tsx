@@ -7,6 +7,7 @@ import TimingsPage from "../pages/TimingsPage.tsx";
 import DashboardPage from "../pages/DashboardPage.tsx";
 import MethodDetailsPage from "../pages/MethodDetailsPage.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
+import TestListPage from "../pages/TestListPage";
 
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
@@ -15,7 +16,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ListIcon from '@mui/icons-material/List';
 import type {JSX} from "react";
 import TestTimings from "../components/timings-tab-components/test-timings";
-import SessionsPage from "../pages/SessionsPage";
+import Sessions from "../components/timings-tab-components/sessions";
 
 // Custom attributes for menu elements
 export interface RouteHandle {
@@ -40,6 +41,11 @@ export const routesConfig: RouteObject[] = [
                 handle: {label: "Tests", show: true, icon: <AnalyticsRoundedIcon />} as RouteHandle
             },
             {
+                path: "testlist",
+                element: <TestListPage/>,
+                handle: {label: "Test List", show: true, icon: <AnalyticsRoundedIcon />} as RouteHandle
+            },
+            {
                 path: "about",
                 element: <AboutPage/>,
                 handle: {label: "About", show: true, icon: <InfoRoundedIcon />} as RouteHandle
@@ -61,7 +67,7 @@ export const routesConfig: RouteObject[] = [
                     },
                     {
                         path: "sessions",
-                        element: <SessionsPage/>,
+                        element: <Sessions/>,
                         handle: {label: "Sessions", show: true, icon: <OpenInNewIcon />} as RouteHandle
                     },
                 ]

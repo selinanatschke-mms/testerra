@@ -3,26 +3,27 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import type {SxProps, Theme} from "@mui/material/styles";
 
-type SelectInputProps = {
+type MultiSelectInputProps = {
     label: string,
-    value: string,
-    onChange: (value: string) => void,
+    values: string[] | [],
+    onChange: (value: string[]) => void;
     menuItems: { value: string, label: string }[];
     sx?: SxProps<Theme>;
 }
 
-const SelectInput = ({label, value, onChange, menuItems, sx}: SelectInputProps) => {
+const MultiSelectInput = ({label, values, onChange, menuItems, sx}: MultiSelectInputProps) => {
 
     return (
         <Box sx={sx}>
             <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+                <InputLabel>{label}</InputLabel>
                 <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={value}
+                    multiple
+                    value={values as unknown as string}
                     label={label}
-                    onChange={e => onChange?.(e.target.value)}
+                    onChange={(e) => {
+                        onChange(e.target.value as unknown as string[]);
+                    }}
                 >
                     {menuItems.map(menuItem => (
                         <MenuItem key={menuItem.value} value={menuItem.value}>
@@ -35,4 +36,4 @@ const SelectInput = ({label, value, onChange, menuItems, sx}: SelectInputProps) 
     );
 }
 
-export default SelectInput;
+export default MultiSelectInput;
