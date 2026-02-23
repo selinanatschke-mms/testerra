@@ -5,13 +5,14 @@ import type {SxProps, Theme} from "@mui/material/styles";
 
 type MultiSelectInputProps = {
     label: string,
-    values: string[] | [],
+    values: string[],
     onChange: (value: string[]) => void;
     menuItems: { value: string, label: string }[];
     sx?: SxProps<Theme>;
+    renderValue?: (selected: string[]) => React.ReactNode;
 }
 
-const MultiSelectInput = ({label, values, onChange, menuItems, sx}: MultiSelectInputProps) => {
+const MultiSelectInput = ({label, values, onChange, menuItems, sx, renderValue}: MultiSelectInputProps) => {
 
     return (
         <Box sx={sx}>
@@ -19,11 +20,12 @@ const MultiSelectInput = ({label, values, onChange, menuItems, sx}: MultiSelectI
                 <InputLabel>{label}</InputLabel>
                 <Select
                     multiple
-                    value={values as unknown as string}
+                    value={values}
                     label={label}
                     onChange={(e) => {
                         onChange(e.target.value as unknown as string[]);
                     }}
+                    renderValue={renderValue}
                 >
                     {menuItems.map(menuItem => (
                         <MenuItem key={menuItem.value} value={menuItem.value}>
