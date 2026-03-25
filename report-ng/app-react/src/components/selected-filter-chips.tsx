@@ -20,43 +20,54 @@
  */
 
 import type {ResultStatus} from "../model/status-service";
-import {StatusService} from "../model/status-service";
-
+import type {FilterType, FiltersState} from "../hooks/useTestListFilters"
 import ReportChip from "../widgets/report-chip/report-chip";
 import {Button, Stack} from "@mui/material";
+import {StatusService} from "../model/status-service";
+import {FILTERS} from "../hooks/useTestListFilters";
 
 type SelectedFiltersChipsProps = {
-    selectedStatuses: ResultStatus[],
-    selectedClasses: string[],
-    handleDelete: (value: string | ResultStatus, type: "status" | "class") => void;
+    selectedFilters: FiltersState,
+    handleDelete: (filter: FilterType, filterToRemove?: string | ResultStatus) => void;
     handleClearAllClick: () => void;
 }
 
-const SelectedFiltersChips = ({
-                                  selectedStatuses,
-                                  selectedClasses,
-                                  handleDelete,
-                                  handleClearAllClick
-                              }: SelectedFiltersChipsProps) => (
-    <Stack direction="row" spacing={1}>
-        {selectedStatuses.map((status) => {
-            const statusInformation = StatusService.get(status);
-            if (!statusInformation) return null;
+const SelectedFiltersChips = ({selectedFilters, handleDelete, handleClearAllClick}: SelectedFiltersChipsProps) => {
 
+    // loops through each filter type and combines them in one array, e.g. [3, 4, SimpleTest2]
+    const chips = (Object.keys(FILTERS) as FilterType[]).flatMap((filterType) => {
+        const values = selectedFilters[filterType];
+        if (!values || values.length === 0) return [];
+
+        // loops through values for each type and fixes label for status (3 -> Passed)
+        return values.map((value) => {
+            const label = filterType === "status"
+                ? (StatusService.get(value as ResultStatus)?.label ?? String(value))
+                : String(value);
+
+            // returns chip for each value
             return (
-                <ReportChip key={status} label={statusInformation.label} type="status"
-                            handleDelete={() => handleDelete(status, "status")}
+                <ReportChip
+                    key={String(value)}
+                    label={label}
+                    type={filterType}
+                    handleDelete={() => handleDelete(filterType, value)}
                 />
             );
-        })}
-        {selectedClasses.map((rClass) => (
-            <ReportChip key={rClass} label={rClass} type="class"
-                        handleDelete={() => handleDelete(rClass, "class")}/>
-        ))}
-        {((selectedStatuses && selectedStatuses.length > 0) || (selectedClasses && selectedClasses.length > 0)) && (
-            <Button variant="text" onClick={handleClearAllClick}>CLEAR ALL</Button>
-        )}
-    </Stack>
-);
+        });
+    });
+
+    return (
+        <Stack direction="row" spacing={1}>
+            {chips}
+
+            {chips.length > 0 && (
+                <Button variant="text" onClick={handleClearAllClick}>
+                    CLEAR ALL
+                </Button>
+            )}
+        </Stack>
+    )
+};
 
 export default SelectedFiltersChips;

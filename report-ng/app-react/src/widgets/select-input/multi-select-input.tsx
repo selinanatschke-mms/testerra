@@ -7,12 +7,14 @@ type MultiSelectInputProps = {
     label: string,
     values: string[],
     onChange: (value: string[]) => void;
-    menuItems: { value: string, label: string }[];
+    menuItems: string[];
     sx?: SxProps<Theme>;
     renderValue?: (selected: string[]) => React.ReactNode;
 }
 
 const MultiSelectInput = ({label, values, onChange, menuItems, sx, renderValue}: MultiSelectInputProps) => {
+
+    const availableMenuItems = menuItems.filter(className => !values?.includes(className));
 
     return (
         <Box sx={sx}>
@@ -26,10 +28,14 @@ const MultiSelectInput = ({label, values, onChange, menuItems, sx, renderValue}:
                         onChange(e.target.value as unknown as string[]);
                     }}
                     renderValue={renderValue}
+                    MenuProps={{
+                        anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
+                        transformOrigin: { vertical: 'top', horizontal: 'left' },
+                    }}
                 >
-                    {menuItems.map(menuItem => (
-                        <MenuItem key={menuItem.value} value={menuItem.value}>
-                            {menuItem.label}
+                    {availableMenuItems.map(menuItem => (
+                        <MenuItem key={menuItem} value={menuItem}>
+                            {menuItem}
                         </MenuItem>
                     ))}
                 </Select>

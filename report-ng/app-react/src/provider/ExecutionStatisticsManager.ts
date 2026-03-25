@@ -1,7 +1,8 @@
 import type {ExecutionAggregate, HistoryAggregate, LogMessageAggregate} from "../model/report-model/report_pb.ts";
-import type {ClassContext, LogMessage} from "../model/report-model/framework_pb.ts";
+import type {ClassContext, LogMessage, MethodContext} from "../model/report-model/framework_pb.ts";
 import {ExecutionStatistics} from "../model/ExecutionStatistics.ts";
 import {ClassStatistics} from "../model/ClassStatistics.ts";
+import {MethodDetails} from "../model/MethodDetails";
 
 
 export class ExecutionStatisticsManager {
@@ -44,7 +45,7 @@ export class ExecutionStatisticsManager {
 
         if (this.logMessageAggregate.logMessages) {
             this.logMessages = this.logMessageAggregate.logMessages;
-            console.info(this.logMessages);
+            // console.info(this.logMessages);
         }
     }
 
@@ -56,6 +57,42 @@ export class ExecutionStatisticsManager {
         return this.executionStatistics;
     }
 
+    getLogs() {
+        return this.logMessages;
+    }
+
+    getMethodPromptLogs(methodContext: MethodContext) {
+        const logMessageIds = methodContext.testSteps
+            ?.flatMap(value => value.actions)
+            .flatMap(value => value?.entries)
+            .filter(value => value?.logMessageId)
+            .map(value => value?.logMessageId)
+        const logMessages = this.getLogs()
+        return Object.values(logMessages).filter(logMessage => logMessage.prompt && logMessageIds?.includes(logMessage.id))
+    }
+
+    // note: "!" operator is used to tell typescript that this property is not undefined
+    // (this problem is caused by optional proto properties being non-optional in typescript)
+    // talk with mgn: classContext, testContext, suiteContext, sessionContext and all Ids are never undefined if the "parent" is not undefined
+    getMethodDetails(methodId: string) {
+        const executionStatistics = this.getExecutionStatistics()
+        const executionAggregate = this.getExecutionAggregate();
+        const methodContext = executionAggregate.methodContexts?.[methodId];
+        if (methodContext) {
+            const classContext = executionAggregate.classContexts![methodContext.classContextId!];
+            const testContext = executionAggregate.testContexts![classContext.testContextId!];
+            const suiteContext = executionAggregate.suiteContexts![testContext.suiteContextId!];
+            const sessionContexts = methodContext.sessionContextIds!.map(value => executionAggregate.sessionContexts![value])
+
+            const methodDetails = new MethodDetails(methodContext, new ClassStatistics(classContext));
+            methodDetails.executionStatistics = executionStatistics;
+            methodDetails.testContext = testContext;
+            methodDetails.suiteContext = suiteContext;
+            methodDetails.sessionContexts = sessionContexts;
+            methodDetails.promptLogs = this.getMethodPromptLogs(methodContext);
+            return methodDetails;
+        }
+    }
 
     // TODO: Add all the other methods here...
 

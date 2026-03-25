@@ -23,109 +23,138 @@ import { useSearchParams } from "react-router-dom";
 import { StatusService } from "../model/status-service";
 import type { ResultStatus } from "../model/status-service";
 import * as React from "react";
+import {useReportData} from "../provider/DataProvider";
+import {ClassName, classNameConverter} from "../utils/classNameConverter";
+
+export type FilterType = "status" | "class";
+
+export type FilterValueMap = {
+    status: ResultStatus[];
+    class: string[];
+};
+
+type FilterDef<K extends FilterType> = {
+    filterType: string;
+    // URL -> value
+    parse: (raw: string | null) => FilterValueMap[K] | undefined;
+    // value -> URL string (or null -> remove)
+    convertToURLString: (value: FilterValueMap[K]) => string | null;
+};
+
+export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
+    status: {
+        filterType: "status",
+        parse: (statusParam) => {
+            return statusParam
+            ? statusParam
+                .split("~")
+                .map(statusKey => StatusService.getStatusByKey(statusKey))
+                .filter(Boolean) as ResultStatus[]
+            : [];
+        },
+        convertToURLString: (statuses) => {
+            if (!statuses.length) return null;
+            const value = statuses
+                .map(s => StatusService.get(s)?.key)
+                .filter(Boolean)
+                .join("~");
+            return value || null;
+        },
+    },
+
+    class: {
+        filterType: "class",
+        parse: (classParam) => {
+            return classParam
+            ? classParam.split("~") as string[]
+            : []
+        },
+        convertToURLString: (classes) => (classes.length > 0 ? classes.join("~") : null),
+    }
+};
+
+export type FiltersState = Partial<FilterValueMap>;     // Partial because not every filter has to be set always
 
 export function useTestListFilters() {
-    const statusMenuItems = StatusService.getRelevantStatuses();
+    const {executionMngr} = useReportData();
 
-    const classMenuItems: { value: string, label: string }[] = [{
-        value: "SimpleTest2",
-        label: "SimpleTest2"
-    }, {value: "SimpleTest", label: "SimpleTest"}]
+    let classMenuItems: string[] = []
+
+    if (executionMngr) {
+        const execStatistics = executionMngr.getExecutionStatistics();
+
+        classMenuItems = [...execStatistics.classStatistics
+            .map((classStat) => classNameConverter(classStat.classIdentifier, ClassName.simpleName))
+            .sort((a, b) => a.localeCompare(b)
+            )]
+    }
+
+    const statusMenuItems = StatusService.getRelevantStatuses();
 
     const [configurationMethodsChecked, setConfigurationMethodsChecked] = React.useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const statusParam = searchParams.get("status");
-    const classParam = searchParams.get("class");
+    // read filters from URL when searchParam changes (useMemo)
+    const filters: FiltersState = React.useMemo(() => {
+        const updatedFilters: FiltersState = {};
+        (Object.keys(FILTERS) as FilterType[]).forEach((filterType) => {
+            const filterDefinition = FILTERS[filterType];
+            const parsedFilter = filterDefinition.parse(searchParams.get(filterDefinition.filterType));
 
-    const selectedStatuses: ResultStatus[] = statusParam
-        ? statusParam
-            .split("~")
-            .map(statusKey => StatusService.getStatusByKey(statusKey))
-            .filter(Boolean) as ResultStatus[]
-        : [];
-    const selectedClasses: string[] = classParam
-        ? (classParam.split("~") as string[])
-        : [];
-
-    const handleStatusChange = (statuses: ResultStatus[]) => {
-        const params = new URLSearchParams(searchParams);
-
-        if (statuses.length > 0) {
-            const keys = statuses.map(
-                s => StatusService.get(s)?.key
-            ).filter(Boolean);
-
-            params.set("status", keys.join("~"));
-        } else {
-            params.delete("status");
-        }
-
-        setSearchParams(params);
-    };
-
-    const handleClassChange = (classes: string[]) => {
-        const params = new URLSearchParams(searchParams);
-
-        if (classes.length > 0) {
-            params.set("class", classes.join("~"));
-        } else {
-            params.delete("class");
-        }
-
-        setSearchParams(params);
-    };
-
-    const handleConfigurationMethodsChecked = (value: any) => {
-        setConfigurationMethodsChecked(value);
-    };
-
-    const handleDelete = (value: string | ResultStatus, type: "status" | "class") => {
-        setSearchParams(prev => {
-            const params = new URLSearchParams(prev);
-
-            if (type === "status") {
-                const updated = selectedStatuses.filter(s => s !== value);
-                if (updated.length > 0) {
-                    const keys = updated
-                        .map(s => StatusService.get(s)?.key)
-                        .filter(Boolean);
-                    params.set("status", keys.join("~"));
-                } else {
-                    params.delete("status");
-                }
+            // if filter for this type is set, add values to newFilters
+            if (parsedFilter !== undefined) {
+                (updatedFilters as any)[filterType] = parsedFilter;     // "as any" necessary because TS does not know, that "status" gets "ResultStatus[]" and "class" gets "string[]"
             }
-
-            if (type === "class") {
-                const updated = selectedClasses.filter(c => c !== value);
-                if (updated.length > 0) {
-                    params.set("class", updated.join("~"));
-                } else {
-                    params.delete("class");
-                }
-            }
-
-            return params;
         });
+        return updatedFilters;
+    }, [searchParams]);
+
+    // helper: update URL
+    const setFilter = <T extends FilterType>(filter: T, updatedFilter: FilterValueMap[T]) => {
+        const filterDefinition = FILTERS[filter];
+        const params = new URLSearchParams(searchParams);
+        const convertedFilter = filterDefinition.convertToURLString(updatedFilter);
+
+        if (convertedFilter === null) params.delete(filterDefinition.filterType);
+        else params.set(filterDefinition.filterType, convertedFilter);
+
+        setSearchParams(params);
     };
 
-    const handleClearAllClick = () => {
+    const clearAll = () => {
         const params = new URLSearchParams(searchParams);
-        params.delete("status");
-        params.delete("class");
+        (Object.keys(FILTERS) as FilterType[]).forEach((type) => {
+            params.delete(FILTERS[type].filterType);
+        });
         setSearchParams(params);
-    }
+    };
+
+    const handleConfigurationMethodsChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setConfigurationMethodsChecked(event.target.checked);
+    };
+
+    // generic remove function (for arrays and strings)
+    const handleDelete = (filter: FilterType, filterToRemove?: string | ResultStatus) => {
+        // multiple-value filters (arrays; remove = only the one that should be removed is removed)
+        if (filter === "status" || filter === "class") {
+            const currentFilters = (filters[filter] ?? []) as any[];
+            const updatedFilters = currentFilters.filter(filter => filter !== filterToRemove);
+            setFilter(filter as any, updatedFilters as any);
+            return;
+        }
+
+        // single-value filters (remove = delete param)
+        setFilter(filter as any, "" as any);
+    };
 
     return {
         statusMenuItems,
         classMenuItems,
-        selectedStatuses,
-        selectedClasses,
+        filters,
         configurationMethodsChecked,
-        handleStatusChange,
-        handleClassChange,
+        setFilter,
         handleConfigurationMethodsChecked,
         handleDelete,
-        handleClearAllClick,
+        clearAll,
     };
 }

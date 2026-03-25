@@ -132,6 +132,8 @@ const STATUS_CONFIG: Record<ResultStatus, StatusInformation> = {
     },
 };
 
+const packageRegexp = new RegExp("^(.+)\\.(\\w+)$");
+
 // Public API
 export const StatusService = {
     //Returns the full status information object
@@ -185,5 +187,19 @@ export const StatusService = {
             ([, statusInformation]) => statusInformation.key === key
         );
         return entry ? Number(entry[0]) as ResultStatus : null;
+    },
+
+    separateNamespace(namespace:string): {package?: string, class: string} {
+        const match = namespace.match(packageRegexp);
+        if (match) {
+            return {
+                package: match[1],
+                class: match[2],
+            }
+        } else {
+            return {
+                class: namespace
+            }
+        }
     }
 };

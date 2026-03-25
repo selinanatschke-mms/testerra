@@ -8,21 +8,23 @@ import InputAdornment from '@mui/material/InputAdornment';
 import MultiSelectInput from "../widgets/select-input/multi-select-input";
 import {useTestListFilters} from "../hooks/useTestListFilters";
 import SelectedFiltersChips from "../components/selected-filter-chips";
+import TestList from "../components/TestList";
 
 const TestListPage = () => {
 
     const {
         statusMenuItems,
         classMenuItems,
-        selectedStatuses,
-        selectedClasses,
-        handleStatusChange,
-        handleClassChange,
+        filters,
+        setFilter,
         configurationMethodsChecked,
         handleConfigurationMethodsChecked,
         handleDelete,
-        handleClearAllClick
+        clearAll,
     } = useTestListFilters();
+
+    const selectedStatuses = filters.status ?? [];
+    const selectedClasses = filters.class ?? [];
 
     return (
         <Box
@@ -34,11 +36,14 @@ const TestListPage = () => {
                 columns={12}
             >
                 <Grid size={2}>
-                    <StatusSelectInput label="Status" selectedStatuses={selectedStatuses} onChange={handleStatusChange}
+                    <StatusSelectInput label="Status" selectedStatuses={selectedStatuses}
+                                       onChange={(newStatuses) => setFilter("status", newStatuses)}
                                        menuItems={statusMenuItems}/>
                 </Grid>
                 <Grid size={3}>
-                    <MultiSelectInput label="Class" values={selectedClasses} onChange={handleClassChange}
+                    <MultiSelectInput label="Class"
+                                      values={selectedClasses}
+                                      onChange={(newClasses) => setFilter("class", newClasses)}
                                       menuItems={classMenuItems}
                                       renderValue={(selected: string[]) => {
                                           if (!selected?.length) return "";
@@ -66,12 +71,14 @@ const TestListPage = () => {
                                                        onChange={handleConfigurationMethodsChecked}/>}
                                       label="Show configuration methods"/>
                 </Grid>
-                <Grid size={12}>
-                    <SelectedFiltersChips selectedStatuses={selectedStatuses}
-                                          selectedClasses={selectedClasses}
+                <Grid size={12} minHeight={36}>
+                    <SelectedFiltersChips selectedFilters={filters}
                                           handleDelete={handleDelete}
-                                          handleClearAllClick={handleClearAllClick}/>
+                                          handleClearAllClick={clearAll}/>
 
+                </Grid>
+                <Grid size={12} >
+                    <TestList filters={filters}/>
                 </Grid>
             </Grid>
         </Box>
