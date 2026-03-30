@@ -64,7 +64,26 @@ export const reportTheme = createTheme({
         cardHeight: (units: number) => ({
             height: units * 192,
         }),
-    }
+    },
+    components: {
+        MuiTableContainer: {
+            styleOverrides: {
+                root: {
+                    border: "1px solid rgba(0, 0, 0, 0.12)",
+                    boxShadow: "none"
+                },
+            },
+        },
+        MuiTableHead: {
+            styleOverrides: {
+                root: {
+                    "& .MuiTableCell-root": {
+                        borderBottomColor: "rgba(0, 0, 0, 0.12)",
+                    },
+                },
+            },
+        },
+    },
 });
 
 declare module "@mui/material/styles" {

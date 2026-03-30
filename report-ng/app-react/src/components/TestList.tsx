@@ -116,6 +116,13 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
         )
     }
 
+    const statusCount = new Set(
+        filteredMethodDetails?.map((m) => m?.methodContext.resultStatus),
+    ).size;
+    const classCount = new Set(
+        filteredMethodDetails?.map((m) => m?.classStatistics.classIdentifier),
+    ).size;
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{
@@ -125,11 +132,11 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
                    aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell style={{width: "15%"}}>Status</TableCell>
+                        <TableCell style={{width: "15%"}}>Status ({statusCount})</TableCell>
                         <TableCell align={"center"} style={{width: "10%"}}>Run index</TableCell>
-                        <TableCell style={{width: "25%"}}>Class</TableCell>
+                        <TableCell style={{width: "25%"}}>Class ({classCount})</TableCell>
                         <TableCell style={{width: "10%"}}>Start time</TableCell>
-                        <TableCell>Method</TableCell>
+                        <TableCell>Method ({filteredMethodDetails.length})</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
