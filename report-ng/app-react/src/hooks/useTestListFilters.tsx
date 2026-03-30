@@ -102,8 +102,12 @@ export function useTestListFilters() {
 
     const statusMenuItems = StatusService.getRelevantStatuses();
 
-    const [configurationMethodsChecked, setConfigurationMethodsChecked] = React.useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
+
+    const configurationMethodsChecked = React.useMemo(
+        () => searchParams.get("config") === "true",
+        [searchParams]
+    );
 
     // read filters from URL when searchParam changes (useMemo)
     const filters: FiltersState = React.useMemo(() => {
@@ -141,7 +145,16 @@ export function useTestListFilters() {
     };
 
     const handleConfigurationMethodsChecked = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setConfigurationMethodsChecked(event.target.checked);
+        const checked = event.target.checked;
+        const params = new URLSearchParams(searchParams);
+
+        if (checked) {
+            params.set("config", "true");
+        } else {
+            params.delete("config");
+        }
+
+        setSearchParams(params);
     };
 
     // generic remove function (for arrays and strings)

@@ -94,7 +94,7 @@ const TestListPage = () => {
 
                 </Grid>
                 <Grid size={12} >
-                    <TestList filters={filters} searchText={searchText}/>
+                    <TestList filters={filters} searchText={searchText} showConfigurationMethods={configurationMethodsChecked}/>
                 </Grid>
             </Grid>
         </Box>

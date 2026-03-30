@@ -20,10 +20,11 @@ import HighlightText from "../utils/highlightText";
 
 interface TestListProps {
     filters: FiltersState,
-    searchText: string
+    searchText: string,
+    showConfigurationMethods: boolean
 }
 
-const TestList = ({filters, searchText}: TestListProps) => {
+const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps) => {
     const {executionMngr, isLoading, error} = useReportData();
 
     // strings used for highlighting
@@ -51,6 +52,12 @@ const TestList = ({filters, searchText}: TestListProps) => {
     const [filteredMethodDetails, setFilteredMethodDetails] = useState<MethodDetails[]>([]);    // new filter state for filtered data
     useEffect(() => {
         let filtered = methodDetails;
+
+        // configuration methods filter
+        filtered = filtered.filter(detail => {
+            const methodType = detail.methodContext.methodType;
+            return showConfigurationMethods || methodType === 1;
+        });
 
         // status filter
         if (filters.status && filters.status.length > 0) {
