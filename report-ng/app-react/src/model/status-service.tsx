@@ -75,12 +75,7 @@ const STATUS_CONFIG: Record<ResultStatus, StatusInformation> = {
         label: "Passed",
         color: reportTheme.custom.statusColors.passed,
         icon: CheckCircleIcon,
-        key: "passed",
-        group: [
-            ResultStatusType.PASSED,
-            ResultStatusType.PASSED_RETRY,
-            ResultStatusType.REPAIRED,
-        ],
+        key: "passed"
     },
     [ResultStatusType.MINOR]: {
         label: "Minor",
@@ -162,7 +157,13 @@ export const StatusService = {
 
     // Returns grouped statuses (used for filtering etc.)
     getGroup(status: ResultStatus): ResultStatus[] {
-        return STATUS_CONFIG[status]?.group ?? [status];
+        const passedStatuses = this.getPassedStatuses();
+
+        if (passedStatuses.includes(status)) {
+            return passedStatuses;
+        }
+
+        return [status];
     },
 
     getRelevantStatuses(): ResultStatus[] {
