@@ -17,7 +17,7 @@ import type {FiltersState} from "../hooks/useTestListFilters";
 import {MethodDetails} from "../model/MethodDetails";
 import {ClassName, classNameConverter} from "../utils/classNameConverter";
 import HighlightText from "../utils/highlightText";
-
+import NoResultsCard from "./no-results-card";
 interface TestListProps {
     filters: FiltersState,
     searchText: string,
@@ -108,6 +108,13 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
 
         setFilteredMethodDetails(filtered);
     }, [methodDetails, filters]); // methodDetails and filters as dependencies => every time one of them changes, this will be executed again
+
+
+    if(filteredMethodDetails.length < 1){
+        return (
+            <NoResultsCard />
+        )
+    }
 
     return (
         <TableContainer component={Paper}>
