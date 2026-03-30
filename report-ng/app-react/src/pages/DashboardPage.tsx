@@ -11,6 +11,7 @@ import DashboardHistoryChartCard from "../components/dashboard-components/dashbo
 import {useReportData} from "../provider/DataProvider";
 import {useSearchParams} from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
+import {ExecutionStatistics} from "../model/ExecutionStatistics";
 
 const DashboardPage = () => {
 
@@ -20,7 +21,7 @@ const DashboardPage = () => {
     if (error) return <div>Fehler: {error.message}</div>;
     if (!executionMngr) return null;
 
-    const execStatistics = executionMngr.getExecutionStatistics();
+    const execStatistics: ExecutionStatistics = executionMngr.getExecutionStatistics();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const selectedStatus = searchParams.get("status");
@@ -55,7 +56,7 @@ const DashboardPage = () => {
                 <Grid size={{sm: 12, lg: 6}}>
                     <Stack direction="column" spacing={2}>
                         <DashboardHistoryChartCard sx={theme.mixins.cardHeight(2)}/>
-                        <DashboardFailureAspectsCard sx={theme.mixins.cardHeight(1)}/>
+                        <DashboardFailureAspectsCard sx={theme.mixins.cardHeight(1)} execStatistics={execStatistics}/>
                     </Stack>
                 </Grid>
                 <Grid size={12}>

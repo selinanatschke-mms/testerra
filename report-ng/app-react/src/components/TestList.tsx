@@ -33,11 +33,14 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
         [searchText]
     );
 
+    if (isLoading) return <div>Lade Konfiguration...</div>;
+    if (error) return <div>Fehler: {error.message}</div>;
+    if (!executionMngr) return null;
+
+    const execStatistics = executionMngr?.getExecutionStatistics();
+
     // useMemo to make sure methodDetails is only built new if the data basis (execStatistics) changes (this prevents that methodDetails is built new each frame and causes useEffect trigger)
     const methodDetails = useMemo(() => {
-        if (!executionMngr) return [];
-        const execStatistics = executionMngr?.getExecutionStatistics();
-
         return execStatistics.classStatistics.flatMap(classStatistic =>
             classStatistic.methodContexts
                 .map(methodContext => (
@@ -58,6 +61,20 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
             const methodType = detail.methodContext.methodType;
             return showConfigurationMethods || methodType === 1;
         });
+
+        // custom filter: failure aspects
+        if (filters.customFilterFailureAspects) {
+            const relevantFailureAspect =
+                execStatistics.uniqueFailureAspects[parseInt(filters.customFilterFailureAspects[0])];
+
+            if (relevantFailureAspect) {
+                filtered = filtered.filter(detail =>
+                    detail.failureAspects.some(
+                        failureAspect => failureAspect.identifier === relevantFailureAspect.identifier
+                    )
+                );
+            }
+        }
 
         // status filter
         if (filters.status && filters.status.length > 0) {
@@ -91,10 +108,6 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
 
         setFilteredMethodDetails(filtered);
     }, [methodDetails, filters]); // methodDetails and filters as dependencies => every time one of them changes, this will be executed again
-
-    if (isLoading) return <div>Lade Konfiguration...</div>;
-    if (error) return <div>Fehler: {error.message}</div>;
-    if (!executionMngr) return null;
 
     return (
         <TableContainer component={Paper}>

@@ -26,12 +26,13 @@ import * as React from "react";
 import {useReportData} from "../provider/DataProvider";
 import {ClassName, classNameConverter} from "../utils/classNameConverter";
 
-export type FilterType = "status" | "class" | "customText";
+export type FilterType = "status" | "class" | "customText" | "customFilterFailureAspects";
 
 export type FilterValueMap = {
     status: ResultStatus[];
     class: string[];
     customText: string[];
+    customFilterFailureAspects: string[];
 };
 
 type FilterDef<K extends FilterType> = {
@@ -81,6 +82,17 @@ export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
                 : []
         },
         convertToURLString: (texts) => (texts.length > 0 ? texts.join("~") : null),
+    },
+
+    customFilterFailureAspects: {
+        filterType: "customFilterFailureAspects",
+        parse: (failureAspectParam) => {
+            return failureAspectParam ? [failureAspectParam] : [];
+        },
+        convertToURLString: (failureAspects) => {
+            if(!failureAspects.length) return null;
+            return failureAspects[0];
+        }
     }
 };
 
@@ -157,18 +169,11 @@ export function useTestListFilters() {
         setSearchParams(params);
     };
 
-    // generic remove function (for arrays and strings)
+    // generic remove function (for arrays)
     const handleDelete = (filter: FilterType, filterToRemove?: string | ResultStatus) => {
-        // multiple-value filters (arrays; remove = only the one that should be removed is removed)
-        if (filter === "status" || filter === "class" || filter === "customText") {
-            const currentFilters = (filters[filter] ?? []) as any[];
-            const updatedFilters = currentFilters.filter(filter => filter !== filterToRemove);
-            setFilter(filter as any, updatedFilters as any);
-            return;
-        }
-
-        // single-value filters (remove = delete param)
-        setFilter(filter as any, "" as any);
+        const currentFilters = (filters[filter] ?? []) as any[];
+        const updatedFilters = currentFilters.filter(filter => filter !== filterToRemove);
+        setFilter(filter as any, updatedFilters as any);
     };
 
     return {
