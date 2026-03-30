@@ -26,11 +26,12 @@ import * as React from "react";
 import {useReportData} from "../provider/DataProvider";
 import {ClassName, classNameConverter} from "../utils/classNameConverter";
 
-export type FilterType = "status" | "class";
+export type FilterType = "status" | "class" | "customText";
 
 export type FilterValueMap = {
     status: ResultStatus[];
     class: string[];
+    customText: string[];
 };
 
 type FilterDef<K extends FilterType> = {
@@ -70,6 +71,16 @@ export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
             : []
         },
         convertToURLString: (classes) => (classes.length > 0 ? classes.join("~") : null),
+    },
+
+    customText: {
+        filterType: "customText",
+        parse: (textParam) => {
+            return textParam
+                ? textParam.split("~") as string[]
+                : []
+        },
+        convertToURLString: (texts) => (texts.length > 0 ? texts.join("~") : null),
     }
 };
 
@@ -136,7 +147,7 @@ export function useTestListFilters() {
     // generic remove function (for arrays and strings)
     const handleDelete = (filter: FilterType, filterToRemove?: string | ResultStatus) => {
         // multiple-value filters (arrays; remove = only the one that should be removed is removed)
-        if (filter === "status" || filter === "class") {
+        if (filter === "status" || filter === "class" || filter === "customText") {
             const currentFilters = (filters[filter] ?? []) as any[];
             const updatedFilters = currentFilters.filter(filter => filter !== filterToRemove);
             setFilter(filter as any, updatedFilters as any);

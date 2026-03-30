@@ -9,6 +9,7 @@ import MultiSelectInput from "../widgets/select-input/multi-select-input";
 import {useTestListFilters} from "../hooks/useTestListFilters";
 import SelectedFiltersChips from "../components/selected-filter-chips";
 import TestList from "../components/TestList";
+import {useState} from "react";
 
 const TestListPage = () => {
 
@@ -25,6 +26,9 @@ const TestListPage = () => {
 
     const selectedStatuses = filters.status ?? [];
     const selectedClasses = filters.class ?? [];
+
+    // local search state
+    const [searchText, setSearchText] = useState("");
 
     return (
         <Box
@@ -54,6 +58,18 @@ const TestListPage = () => {
                 <Grid size={5}>
                     <TextField
                         label="Search"
+                        value={searchText}
+                        onChange={e => setSearchText(e.target.value)}
+                        onKeyDown={e => {
+                            if (e.key === "Enter") {
+                                // add new word to text Chips
+                                const prevCustomText = filters.customText ?? [];
+                                const newCustomText = [...prevCustomText, searchText.trim()]
+                                    .filter((v, i, a) => a.indexOf(v) === i); // avoid duplicates
+                                setFilter("customText", newCustomText);
+                                setSearchText("");
+                            }
+                        }}
                         slotProps={{
                             input: {
                                 startAdornment: (
@@ -78,7 +94,7 @@ const TestListPage = () => {
 
                 </Grid>
                 <Grid size={12} >
-                    <TestList filters={filters}/>
+                    <TestList filters={filters} searchText={searchText}/>
                 </Grid>
             </Grid>
         </Box>

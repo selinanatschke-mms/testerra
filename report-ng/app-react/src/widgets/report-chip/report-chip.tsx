@@ -6,7 +6,7 @@ type ReportChipProps = {
     label: string,
     sx?: SxProps<Theme>,
     handleDelete?: () => void;
-    type?: "status" | "class" | "text";
+    type?: "status" | "class" | "customText";
 }
 
 const ReportChip = ({label, sx, handleDelete, type}: ReportChipProps) => {
@@ -16,7 +16,7 @@ const ReportChip = ({label, sx, handleDelete, type}: ReportChipProps) => {
         color = "blue"
     } else if (type === "class") {
         color = "green"
-    } else if (type === "text") {
+    } else if (type === "customText") {
         color = "purple"
     } else {
         color = "default"

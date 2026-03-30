@@ -16,22 +16,27 @@ import Link from '@mui/material/Link';
 import type {FiltersState} from "../hooks/useTestListFilters";
 import {MethodDetails} from "../model/MethodDetails";
 import {ClassName, classNameConverter} from "../utils/classNameConverter";
+import HighlightText from "../utils/highlightText";
 
 interface TestListProps {
-    filters: FiltersState
+    filters: FiltersState,
+    searchText: string
 }
 
-const TestList = ({filters}: TestListProps) => {
+const TestList = ({filters, searchText}: TestListProps) => {
     const {executionMngr, isLoading, error} = useReportData();
 
-    if (isLoading) return <div>Lade Konfiguration...</div>;
-    if (error) return <div>Fehler: {error.message}</div>;
-    if (!executionMngr) return null;
-
-    const execStatistics = executionMngr.getExecutionStatistics();
+    // strings used for highlighting
+    const activeSearchTerms = useMemo(
+        () =>(searchText.trim() ? [searchText.trim()] : []),
+        [searchText]
+    );
 
     // useMemo to make sure methodDetails is only built new if the data basis (execStatistics) changes (this prevents that methodDetails is built new each frame and causes useEffect trigger)
     const methodDetails = useMemo(() => {
+        if (!executionMngr) return [];
+        const execStatistics = executionMngr?.getExecutionStatistics();
+
         return execStatistics.classStatistics.flatMap(classStatistic =>
             classStatistic.methodContexts
                 .map(methodContext => (
@@ -40,7 +45,7 @@ const TestList = ({filters}: TestListProps) => {
                         : undefined
                 ))
         ).filter((detail): detail is MethodDetails => detail !== undefined);  // removes undefined values
-    }, [execStatistics, executionMngr]);
+    }, [executionMngr]);
 
     // useEffect to filter based on filter props (because we wait data changes from multiple other Ui components and want to react to them and synchronize filter state)
     const [filteredMethodDetails, setFilteredMethodDetails] = useState<MethodDetails[]>([]);    // new filter state for filtered data
@@ -62,8 +67,27 @@ const TestList = ({filters}: TestListProps) => {
             });
         }
 
+        // free text
+        if (filters.customText && filters.customText.length > 0) {
+            filtered = filtered.filter(detail => {
+                return filters.customText!.every(searchTerm => {
+                    const regex = StatusService.createRegexpFromSearchString(searchTerm);
+                    return detail.identifier.match(regex)
+                        || detail.failureAspects.some(failureAspect => failureAspect.identifier.match(regex))
+                        || detail.failsAnnotation?.description?.match(regex)
+                        || detail.failsAnnotation?.ticketString?.match(regex)
+                        || detail.promptLogs.some(logMessage => logMessage.message?.match(regex))
+                        || detail.classStatistics.classIdentifier.match(regex);
+                });
+            });
+        }
+
         setFilteredMethodDetails(filtered);
     }, [methodDetails, filters]); // methodDetails and filters as dependencies => every time one of them changes, this will be executed again
+
+    if (isLoading) return <div>Lade Konfiguration...</div>;
+    if (error) return <div>Fehler: {error.message}</div>;
+    if (!executionMngr) return null;
 
     return (
         <TableContainer component={Paper}>
@@ -97,7 +121,12 @@ const TestList = ({filters}: TestListProps) => {
                                 {filteredMethodDetail?.methodContext.methodRunIndex}
                             </TableCell>
                             <TableCell sx={{overflowWrap: "anywhere"}}>
-                                <Link href="#/Tests">{StatusService.separateNamespace(filteredMethodDetail?.classStatistics.classIdentifier ?? "").class}</Link>
+                                <Link href="#/Tests">
+                                    <HighlightText
+                                        text={StatusService.separateNamespace(filteredMethodDetail?.classStatistics.classIdentifier ?? "").class}
+                                        searchWord={activeSearchTerms}
+                                    />
+                                </Link>
                             </TableCell>
                             <TableCell>
                                 {new Date(filteredMethodDetail?.methodContext.contextValues?.startTime ?? 0).toLocaleTimeString()}
@@ -106,13 +135,23 @@ const TestList = ({filters}: TestListProps) => {
                                 <Stack direction="column">
                                     <Stack direction="row" sx={{gap: 1, alignItems: "center"}}>
                                         <ReadMoreIcon/>
-                                        <Link href="#/Tests">{filteredMethodDetail?.identifier}</Link>
+                                        <Link href="#/Tests">
+                                            <HighlightText text={filteredMethodDetail?.identifier}
+                                                           searchWord={activeSearchTerms}
+                                            />
+                                        </Link>
                                     </Stack>
                                     {filteredMethodDetail?.failureAspects.map((failureAspect) => (
                                         <Typography variant="body2" sx={{mt: 1}}>
                                             {failureAspect.relevantCause?.className &&
-                                                StatusService.separateNamespace(failureAspect.relevantCause?.className).class}:
-                                            {failureAspect.message}
+                                            <HighlightText
+                                                text={StatusService.separateNamespace(failureAspect.relevantCause?.className).class}
+                                                searchWord={activeSearchTerms}
+                                            />}:
+                                            <HighlightText
+                                                text={failureAspect.message}
+                                                searchWord={activeSearchTerms}
+                                            />
                                         </Typography>
                                     ))}
                                     {filteredMethodDetail?.failsAnnotation?.description &&
@@ -120,7 +159,12 @@ const TestList = ({filters}: TestListProps) => {
                                             <CancelIcon
                                                 sx={{color: StatusService.getColor(filteredMethodDetail?.methodContext.resultStatus!)}}/>
                                             <Typography
-                                                variant="caption">{filteredMethodDetail.failsAnnotation.description}</Typography>
+                                                variant="caption">
+                                                <HighlightText
+                                                    text={filteredMethodDetail.failsAnnotation.description}
+                                                    searchWord={activeSearchTerms}
+                                                />
+                                            </Typography>
                                         </Stack>
                                     }
                                 </Stack>
