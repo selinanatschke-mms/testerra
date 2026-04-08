@@ -1,17 +1,18 @@
 import Chip from "@mui/material/Chip";
 import type {SxProps, Theme} from '@mui/material/styles';
-import type {FilterColor} from "../hooks/useTestListFilters";
+import type {ChipColor} from "../hooks/useTestListFilters";
 
 type ReportChipProps = {
     label: string,
     sx?: SxProps<Theme>,
     handleDelete?: () => void;
-    color?: FilterColor
+    color?: ChipColor,
+    size?: "medium" | "small"
 }
 
-const ReportChip = ({label, sx, handleDelete, color}: ReportChipProps) => {
+const ReportChip = ({label, sx, handleDelete, color, size}: ReportChipProps) => {
     return (
-        <Chip label={label} sx={sx} onDelete={handleDelete} color={color}/>
+        <Chip label={label} sx={sx} onDelete={handleDelete} color={color} size={size}/>
     );
 }
 

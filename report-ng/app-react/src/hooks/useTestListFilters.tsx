@@ -28,7 +28,7 @@ import {ClassName, classNameConverter} from "../utils/classNameConverter";
 import {useMemo} from "react";
 import {ResultStatusType} from "../model/report-model/framework_pb";
 
-export type FilterColor = "blue" | "green" | "purple" | "default";
+export type ChipColor = "blue" | "green" | "purple" | "lightGrey" | "default";
 
 export type FilterType = "status" | "class" | "customText" | "failureAspect";
 
@@ -45,7 +45,7 @@ type FilterDef<K extends FilterType> = {
     parse: (raw: string | null) => FilterValueMap[K] | undefined;
     // value -> URL string (or null -> remove)
     convertToURLString: (value: FilterValueMap[K]) => string | null;
-    color?: FilterColor;
+    color?: ChipColor;
     getLabel: (value?: ResultStatus|string) => string;
 };
 

@@ -13,7 +13,7 @@ import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {Stack, Typography} from "@mui/material";
 import Link from '@mui/material/Link';
-import type {FiltersState} from "../hooks/useTestListFilters";
+import type {ChipColor, FiltersState} from "../hooks/useTestListFilters";
 import {MethodDetails} from "../model/MethodDetails";
 import {ClassName, classNameConverter} from "../utils/classNameConverter";
 import HighlightText from "../utils/highlightText";
@@ -120,6 +120,8 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
         return <NoResultsCard/>
     }
 
+    console.log("filteredMethodDetails", filteredMethodDetails)
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{
@@ -143,6 +145,7 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
                             <TableCell component="th" scope="row">
                                 <ReportChip key={filteredMethodDetail?.methodContext.resultStatus}
                                             label={StatusService.getLabel(filteredMethodDetail?.methodContext.resultStatus!)}
+                                            size="small"
                                             sx={{
                                                 background: StatusService.getColor(filteredMethodDetail?.methodContext.resultStatus!),
                                                 color: "white"
@@ -181,6 +184,11 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
                                                 />
                                             </Typography>
                                         </Link>
+                                        {filteredMethodDetail.methodContext.methodType == 2 && <ReportChip label="Configuration"
+                                                    size="small"
+                                                    color={"lightGrey" as ChipColor}
+                                                    sx={{color: "white"}}
+                                        />}
                                     </Stack>
                                     {filteredMethodDetail?.failureAspects.map((failureAspect) => (
                                         <Typography variant="body2" sx={{mt: 1}}>

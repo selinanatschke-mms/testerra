@@ -18,6 +18,7 @@ declare module '@mui/material/Chip' {
         blue: true;
         green: true;
         purple: true;
+        lightGrey: true;
     }
 }
 

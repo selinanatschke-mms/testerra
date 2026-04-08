@@ -16,7 +16,7 @@ type SelectInputProps = {
 
 const StatusSelectInput = ({label, selectedStatuses, onChange, menuItems, sx}: SelectInputProps) => {
 
-    const availableMenuItems = menuItems.filter(status => !selectedStatuses?.includes(status));
+    const availableMenuItems = menuItems.filter(status => !selectedStatuses?.includes(status as ResultStatus));
 
     return (
         <Box sx={sx}>
@@ -43,12 +43,13 @@ const StatusSelectInput = ({label, selectedStatuses, onChange, menuItems, sx}: S
                     )}
                     {availableMenuItems
                         .map(status => {
-                        const statusInformation = StatusService.get(status);
+                        const statusInformation = StatusService.get(String(status));
                         if (!statusInformation) return null;
 
                         return (
                             <MenuItem key={status} value={status}>
                                 <ReportChip label={statusInformation.label}
+                                            size="small"
                                             sx={{background: statusInformation.color, color: "white"}}/>
                             </MenuItem>
                         )
