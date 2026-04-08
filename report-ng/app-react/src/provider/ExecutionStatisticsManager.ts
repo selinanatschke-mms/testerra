@@ -1,4 +1,4 @@
-import type {ExecutionAggregate, HistoryAggregate, LogMessageAggregate} from "../model/report-model/report_pb.ts";
+import type {ExecutionAggregate, /*HistoryAggregate,*/ LogMessageAggregate} from "../model/report-model/report_pb.ts";
 import type {ClassContext, LogMessage, MethodContext} from "../model/report-model/framework_pb.ts";
 import {ExecutionStatistics} from "../model/ExecutionStatistics.ts";
 import {ClassStatistics} from "../model/ClassStatistics.ts";
@@ -8,16 +8,16 @@ import {MethodDetails} from "../model/MethodDetails";
 export class ExecutionStatisticsManager {
     private readonly executionAggregate: ExecutionAggregate;
     private readonly logMessageAggregate: LogMessageAggregate;
-    private readonly historyAggregate: HistoryAggregate;
+    // private readonly historyAggregate: HistoryAggregate;
 
     private executionStatistics: ExecutionStatistics;
     private logMessages : { [key: string]: LogMessage } = {};
 
 
-    constructor(executionAggregate: ExecutionAggregate, logMessageAggregate: LogMessageAggregate, historyAggregate: HistoryAggregate) {
+    constructor(executionAggregate: ExecutionAggregate, logMessageAggregate: LogMessageAggregate/*, historyAggregate: HistoryAggregate*/) {
         this.executionAggregate = executionAggregate;
         this.logMessageAggregate = logMessageAggregate;
-        this.historyAggregate = historyAggregate;
+        // this.historyAggregate = historyAggregate;
         this.executionStatistics = new ExecutionStatistics(this.executionAggregate);
     }
 

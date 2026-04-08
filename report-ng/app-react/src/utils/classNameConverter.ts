@@ -1,8 +1,9 @@
-export enum ClassName {
-    full = 0,
-    simpleName,
-    package
-}
+export const ClassName = {
+    full: "full",
+    simpleName: "simpleName",
+    package: "package"
+} as const;
+export type ClassName = typeof ClassName[keyof typeof ClassName];
 
 export function classNameConverter(value: string, mode: ClassName): string {
     switch (mode) {

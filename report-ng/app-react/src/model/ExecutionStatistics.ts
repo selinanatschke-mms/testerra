@@ -59,18 +59,18 @@ export class ExecutionStatistics extends Statistics {
         return this.executionAggregate.executionContext?.logMessageIds
     }
 
-    get methodContextLogMessageIds() {
-        return Object.values(this.executionAggregate.methodContexts)
-            .flatMap(methodContext => {
-                return methodContext.testSteps
-                    .flatMap(testStep => testStep.actions)
-                    .flatMap(action => action.entries)
-                    .filter(entry => entry.logMessageId)
-                    .map(entry => {
-                        return {logMessageId: entry.logMessageId, methodContext}
-                    })
-            })
-    }
+    // get methodContextLogMessageIds() {
+    //     return Object.values(this.executionAggregate.methodContexts)
+    //         .flatMap(methodContext => {
+    //             return methodContext.testSteps
+    //                 .flatMap(testStep => testStep.actions)
+    //                 .flatMap(action => action.entries)
+    //                 .filter(entry => entry.logMessageId)
+    //                 .map(entry => {
+    //                     return {logMessageId: entry.logMessageId, methodContext}
+    //                 })
+    //         })
+    // }
 
     get classStatistics() {
         return this._classStatistics;
