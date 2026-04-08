@@ -2,13 +2,11 @@ import Box from "@mui/material/Box";
 import {Grid, Switch} from "@mui/material";
 import StatusSelectInput from "../widgets/select-input/status-select-input";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import TextField from '@mui/material/TextField';
-import SearchIcon from '@mui/icons-material/Search';
-import InputAdornment from '@mui/material/InputAdornment';
 import MultiSelectInput from "../widgets/select-input/multi-select-input";
 import {useTestListFilters} from "../hooks/useTestListFilters";
 import SelectedFiltersChips from "../components/selected-filter-chips";
 import TestList from "../components/TestList";
+import SearchInput from "../widgets/search-input";
 import {useState} from "react";
 
 const TestListPage = () => {
@@ -27,7 +25,7 @@ const TestListPage = () => {
     const selectedStatuses = filters.status ?? [];
     const selectedClasses = filters.class ?? [];
 
-    // local search state
+    // live search text for highlighting while typing (not yet confirmed)
     const [searchText, setSearchText] = useState("");
 
     return (
@@ -56,34 +54,17 @@ const TestListPage = () => {
                                       }}/>
                 </Grid>
                 <Grid size={5}>
-                    <TextField
-                        label="Search"
-                        value={searchText}
-                        onChange={e => setSearchText(e.target.value)}
-                        onKeyDown={e => {
-                            if (e.key === "Enter") {
-                                // add new word to text Chips
-                                const prevCustomText = filters.customText ?? [];
-                                const newCustomText = [...prevCustomText, searchText.trim()]
-                                    .filter((v, i, a) => a.indexOf(v) === i); // avoid duplicates
-                                setFilter("customText", newCustomText);
-                                setSearchText("");
-                            }
+                    <SearchInput
+                        currentTexts={filters.customText ?? []}
+                        onConfirm={(newTexts) => {
+                            setFilter("customText", newTexts);
+                            setSearchText("");
                         }}
-                        slotProps={{
-                            input: {
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <SearchIcon sx={{color: 'action.active'}}/>
-                                    </InputAdornment>
-                                ),
-                            },
-                        }}
-                        sx={{width: "100%"}}
+                        onSearchTextChange={setSearchText}
                     />
                 </Grid>
                 <Grid size={2}>
-                    <FormControlLabel control={<Switch defaultChecked value={configurationMethodsChecked}
+                    <FormControlLabel control={<Switch checked={configurationMethodsChecked}
                                                        onChange={handleConfigurationMethodsChecked}/>}
                                       label="Show configuration methods"/>
                 </Grid>

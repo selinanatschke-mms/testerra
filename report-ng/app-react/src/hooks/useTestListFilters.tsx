@@ -25,14 +25,17 @@ import type { ResultStatus } from "../model/status-service";
 import * as React from "react";
 import {useReportData} from "../provider/DataProvider";
 import {ClassName, classNameConverter} from "../utils/classNameConverter";
+import {useMemo} from "react";
 
-export type FilterType = "status" | "class" | "customText" | "customFilterFailureAspects";
+export type FilterColor = "blue" | "green" | "purple" | "default";
+
+export type FilterType = "status" | "class" | "customText" | "failureAspect";
 
 export type FilterValueMap = {
     status: ResultStatus[];
     class: string[];
     customText: string[];
-    customFilterFailureAspects: string[];
+    failureAspect: string[];
 };
 
 type FilterDef<K extends FilterType> = {
@@ -41,6 +44,8 @@ type FilterDef<K extends FilterType> = {
     parse: (raw: string | null) => FilterValueMap[K] | undefined;
     // value -> URL string (or null -> remove)
     convertToURLString: (value: FilterValueMap[K]) => string | null;
+    color?: FilterColor;
+    getLabel: (value?: ResultStatus|string) => string;
 };
 
 export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
@@ -62,6 +67,10 @@ export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
                 .join("~");
             return value || null;
         },
+        color: "blue",
+        getLabel: (value) => {
+            return StatusService.get(value as ResultStatus)?.label ?? String(value);
+        }
     },
 
     class: {
@@ -72,6 +81,10 @@ export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
             : []
         },
         convertToURLString: (classes) => (classes.length > 0 ? classes.join("~") : null),
+        color: "green",
+        getLabel: (value) => {
+            return String(value);
+        }
     },
 
     customText: {
@@ -82,17 +95,22 @@ export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
                 : []
         },
         convertToURLString: (texts) => (texts.length > 0 ? texts.join("~") : null),
+        color: "purple",
+        getLabel: (value) => {
+            return String(value);
+        }
     },
 
-    customFilterFailureAspects: {
-        filterType: "customFilterFailureAspects",
+    failureAspect: {
+        filterType: "failureAspect",
         parse: (failureAspectParam) => {
             return failureAspectParam ? [failureAspectParam] : [];
         },
         convertToURLString: (failureAspects) => {
             if(!failureAspects.length) return null;
             return failureAspects[0];
-        }
+        },
+        getLabel: () => "Custom Filter"
     }
 };
 
@@ -101,16 +119,14 @@ export type FiltersState = Partial<FilterValueMap>;     // Partial because not e
 export function useTestListFilters() {
     const {executionMngr} = useReportData();
 
-    let classMenuItems: string[] = []
-
-    if (executionMngr) {
-        const execStatistics = executionMngr.getExecutionStatistics();
-
-        classMenuItems = [...execStatistics.classStatistics
-            .map((classStat) => classNameConverter(classStat.classIdentifier, ClassName.simpleName))
-            .sort((a, b) => a.localeCompare(b)
-            )]
-    }
+    // only update classMenuItems if executionManager changes
+    const classMenuItems = useMemo(() => {
+        if (!executionMngr) return [];
+        return executionMngr.getExecutionStatistics()
+            .classStatistics
+            .map(cs => classNameConverter(cs.classIdentifier, ClassName.simpleName))
+            .sort((a, b) => a.localeCompare(b));
+    }, [executionMngr]);
 
     const statusMenuItems = StatusService.getRelevantStatuses();
 
@@ -142,8 +158,12 @@ export function useTestListFilters() {
         const params = new URLSearchParams(searchParams);
         const convertedFilter = filterDefinition.convertToURLString(updatedFilter);
 
-        if (convertedFilter === null) params.delete(filterDefinition.filterType);
-        else params.set(filterDefinition.filterType, convertedFilter);
+        if (convertedFilter === null) {
+            params.delete(filterDefinition.filterType);
+        }
+        else {
+            params.set(filterDefinition.filterType, convertedFilter);
+        }
 
         setSearchParams(params);
     };

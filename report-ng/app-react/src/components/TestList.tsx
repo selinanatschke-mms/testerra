@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from "react";
+import {useMemo} from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -27,33 +27,25 @@ interface TestListProps {
 const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps) => {
     const {executionMngr, isLoading, error} = useReportData();
 
-    // strings used for highlighting
+    // strings used for highlighting: live text while typing
     const activeSearchTerms = useMemo(
         () =>(searchText.trim() ? [searchText.trim()] : []),
         [searchText]
     );
 
-    if (isLoading) return <div>Lade Konfiguration...</div>;
-    if (error) return <div>Fehler: {error.message}</div>;
-    if (!executionMngr) return null;
-
-    const execStatistics = executionMngr?.getExecutionStatistics();
-
-    // useMemo to make sure methodDetails is only built new if the data basis (execStatistics) changes (this prevents that methodDetails is built new each frame and causes useEffect trigger)
+    // useMemo to make sure methodDetails is only built new if the data basis changes
     const methodDetails = useMemo(() => {
-        return execStatistics.classStatistics.flatMap(classStatistic =>
-            classStatistic.methodContexts
-                .map(methodContext => (
-                    methodContext.contextValues && methodContext.contextValues.id
+        if (!executionMngr) return [];
+        return executionMngr.getExecutionStatistics()
+            .classStatistics.flatMap(classStatistic => classStatistic.methodContexts.map((methodContext) =>
+                    methodContext.contextValues?.id
                         ? executionMngr.getMethodDetails(methodContext.contextValues.id)
                         : undefined
-                ))
-        ).filter((detail): detail is MethodDetails => detail !== undefined);  // removes undefined values
+                )).filter((detail): detail is MethodDetails => detail !== undefined);  // removes undefined values
     }, [executionMngr]);
 
-    // useEffect to filter based on filter props (because we wait data changes from multiple other Ui components and want to react to them and synchronize filter state)
-    const [filteredMethodDetails, setFilteredMethodDetails] = useState<MethodDetails[]>([]);    // new filter state for filtered data
-    useEffect(() => {
+    // useMemo to only render new if methodDetails, filter or showConfigurationMethods change
+    const filteredMethodDetails = useMemo(() => {
         let filtered = methodDetails;
 
         // configuration methods filter
@@ -63,9 +55,9 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
         });
 
         // custom filter: failure aspects
-        if (filters.customFilterFailureAspects) {
+        if (filters.failureAspect && executionMngr) {
             const relevantFailureAspect =
-                execStatistics.uniqueFailureAspects[parseInt(filters.customFilterFailureAspects[0])];
+                executionMngr.getExecutionStatistics().uniqueFailureAspects[parseInt(filters.failureAspect[0])];
 
             if (relevantFailureAspect) {
                 filtered = filtered.filter(detail =>
@@ -106,22 +98,25 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
             });
         }
 
-        setFilteredMethodDetails(filtered);
-    }, [methodDetails, filters]); // methodDetails and filters as dependencies => every time one of them changes, this will be executed again
+        return filtered;
+    }, [methodDetails, filters, showConfigurationMethods, executionMngr]);
 
+    const statusCount = useMemo(() =>
+            new Set(filteredMethodDetails.map((m) => m.methodContext.resultStatus)).size,
+        [filteredMethodDetails],
+    );
+    const classCount = useMemo(() =>
+            new Set(filteredMethodDetails.map((m) => m.classStatistics.classIdentifier),).size,
+        [filteredMethodDetails],
+    );
+
+    if (isLoading) return <div>Lade Konfiguration...</div>;
+    if (error) return <div>Fehler: {error.message}</div>;
+    if (!executionMngr) return null;
 
     if(filteredMethodDetails.length < 1){
-        return (
-            <NoResultsCard />
-        )
+        return <NoResultsCard/>
     }
-
-    const statusCount = new Set(
-        filteredMethodDetails?.map((m) => m?.methodContext.resultStatus),
-    ).size;
-    const classCount = new Set(
-        filteredMethodDetails?.map((m) => m?.classStatistics.classIdentifier),
-    ).size;
 
     return (
         <TableContainer component={Paper}>

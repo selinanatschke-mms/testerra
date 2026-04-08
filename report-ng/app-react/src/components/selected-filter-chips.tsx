@@ -23,7 +23,6 @@ import type {ResultStatus} from "../model/status-service";
 import type {FilterType, FiltersState} from "../hooks/useTestListFilters"
 import ReportChip from "../widgets/report-chip/report-chip";
 import {Button, Stack} from "@mui/material";
-import {StatusService} from "../model/status-service";
 import {FILTERS} from "../hooks/useTestListFilters";
 
 type SelectedFiltersChipsProps = {
@@ -41,16 +40,14 @@ const SelectedFiltersChips = ({selectedFilters, handleDelete, handleClearAllClic
 
         // loops through values for each type and fixes label for status (3 -> Passed)
         return values.map((value) => {
-            const label = filterType === "status"
-                ? (StatusService.get(value as ResultStatus)?.label ?? String(value))
-                : String(value);
+            const filterDef = FILTERS[filterType];
 
             // returns chip for each value
             return (
                 <ReportChip
                     key={String(value)}
-                    label={label}
-                    type={filterType}
+                    label={filterDef.getLabel(value)}
+                    color={FILTERS[filterType].color}
                     handleDelete={() => handleDelete(filterType, value)}
                 />
             );
