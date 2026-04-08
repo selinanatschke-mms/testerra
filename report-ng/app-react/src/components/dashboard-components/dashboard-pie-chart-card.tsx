@@ -1,5 +1,5 @@
-import EChart from "../../widgets/echart/echart";
-import ReportCard from "../../widgets/report-card/report-card";
+import EChart from "../../widgets/echart";
+import ReportCard from "../../widgets/report-card";
 import {StatusService} from "../../model/status-service";
 import type {SxProps, Theme} from "@mui/material/styles";
 

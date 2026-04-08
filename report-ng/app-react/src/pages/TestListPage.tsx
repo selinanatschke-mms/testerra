@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
 import {Grid, Switch} from "@mui/material";
-import StatusSelectInput from "../widgets/select-input/status-select-input";
+import StatusSelectInput from "../widgets/status-select-input";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import MultiSelectInput from "../widgets/select-input/multi-select-input";
+import MultiSelectInput from "../widgets/multi-select-input";
 import {useTestListFilters} from "../hooks/useTestListFilters";
 import SelectedFiltersChips from "../components/selected-filter-chips";
 import TestList from "../components/TestList";

@@ -1,10 +1,10 @@
 import {Box, FormControl, MenuItem} from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-import ReportChip from "../report-chip/report-chip";
+import ReportChip from "./report-chip";
 import type {SxProps, Theme} from "@mui/material/styles";
-import {StatusService} from "../../model/status-service";
-import type {ResultStatus} from "../../model/status-service";
+import {StatusService} from "../model/status-service";
+import type {ResultStatus} from "../model/status-service";
 
 type SelectInputProps = {
     label: string

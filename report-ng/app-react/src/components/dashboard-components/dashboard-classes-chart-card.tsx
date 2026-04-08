@@ -1,7 +1,7 @@
 import {useTheme} from "@mui/material";
-import EChart from "../../widgets/echart/echart";
+import EChart from "../../widgets/echart";
 import React from "react";
-import ReportCard from "../../widgets/report-card/report-card";
+import ReportCard from "../../widgets/report-card";
 
 const DashboardClassesChartCard: React.FC = () => {
     const theme = useTheme();

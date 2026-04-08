@@ -1,6 +1,6 @@
-import ReportCard from "../../widgets/report-card/report-card";
-import ButtonList from "../../widgets/button-list/button-list";
-import type {ButtonListItem} from "../../widgets/button-list/button-list";
+import ReportCard from "../../widgets/report-card";
+import ButtonList from "../../widgets/button-list";
+import type {ButtonListItem} from "../../widgets/button-list";
 import {ResultStatusType} from "../../model/report-model/framework_pb";
 import {StatusService} from "../../model/status-service";
 import type {SxProps, Theme} from "@mui/material/styles";

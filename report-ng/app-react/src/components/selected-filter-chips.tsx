@@ -21,7 +21,7 @@
 
 import type {ResultStatus} from "../model/status-service";
 import type {FilterType, FiltersState} from "../hooks/useTestListFilters"
-import ReportChip from "../widgets/report-chip/report-chip";
+import ReportChip from "../widgets/report-chip";
 import {Button, Stack} from "@mui/material";
 import {FILTERS} from "../hooks/useTestListFilters";
 
