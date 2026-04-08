@@ -18,6 +18,8 @@ import {MethodDetails} from "../model/MethodDetails";
 import {ClassName, classNameConverter} from "../utils/classNameConverter";
 import HighlightText from "../utils/highlightText";
 import NoResultsCard from "./no-results-card";
+import {formatDuration} from "../utils/durationFormatter"
+
 interface TestListProps {
     filters: FiltersState,
     searchText: string,
@@ -147,27 +149,37 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
                                             }}/>
                             </TableCell>
                             <TableCell align={"center"}>
-                                {filteredMethodDetail?.methodContext.methodRunIndex}
+                                <Typography> {filteredMethodDetail?.methodContext.methodRunIndex} </Typography>
                             </TableCell>
                             <TableCell sx={{overflowWrap: "anywhere"}}>
                                 <Link href="#/Tests">
-                                    <HighlightText
-                                        text={StatusService.separateNamespace(filteredMethodDetail?.classStatistics.classIdentifier ?? "").class}
-                                        searchWord={activeSearchTerms}
-                                    />
+                                    <Typography>
+                                        <HighlightText
+                                            text={StatusService.separateNamespace(filteredMethodDetail?.classStatistics.classIdentifier ?? "").class}
+                                            searchWord={activeSearchTerms}
+                                        />
+                                    </Typography>
                                 </Link>
                             </TableCell>
                             <TableCell>
-                                {new Date(filteredMethodDetail?.methodContext.contextValues?.startTime ?? 0).toLocaleTimeString()}
+                                <Stack direction="column">
+                                    <Typography> {new Date(filteredMethodDetail?.methodContext.contextValues?.startTime ?? 0).toLocaleTimeString()} </Typography>
+                                    <Typography color="lightGrey" variant="body2">(
+                                        {formatDuration((filteredMethodDetail?.methodContext.contextValues?.endTime ?? 0) - (filteredMethodDetail?.methodContext.contextValues?.startTime ?? 0))}
+                                        )
+                                    </Typography>
+                                </Stack>
                             </TableCell>
                             <TableCell sx={{overflowWrap: "anywhere"}}>
                                 <Stack direction="column">
                                     <Stack direction="row" sx={{gap: 1, alignItems: "center"}}>
                                         <ReadMoreIcon/>
                                         <Link href="#/Tests">
-                                            <HighlightText text={filteredMethodDetail?.identifier}
-                                                           searchWord={activeSearchTerms}
-                                            />
+                                            <Typography>
+                                                <HighlightText text={filteredMethodDetail?.identifier}
+                                                               searchWord={activeSearchTerms}
+                                                />
+                                            </Typography>
                                         </Link>
                                     </Stack>
                                     {filteredMethodDetail?.failureAspects.map((failureAspect) => (

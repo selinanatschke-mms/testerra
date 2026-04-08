@@ -33,9 +33,9 @@ const DashboardFailureAspectsCard = ({sx, execStatistics}: DashboardFailureAspec
     const failureAspectsLabel = (
         <>
             Top 3 Failure Aspects (
-            <Link href="#/Tests">${majorFailures} Major</Link>
+            <Link href="#/Tests">{majorFailures} Major</Link>
             {" | "}
-            <Link href="#/Tests">${minorFailures} Minor</Link>
+            <Link href="#/Tests">{minorFailures} Minor</Link>
             )
         </>
     );

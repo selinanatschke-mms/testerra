@@ -58,6 +58,12 @@ export const reportTheme = createTheme({
             light: '#884AB920',
             dark: '#884AB920',
             contrastText: '#884AB9',
+        },
+        lightGrey: {
+            main: '#0000008A',
+            light: '#0000008A',
+            dark: '#0000008A',
+            contrastText: '#0000008A',
         }
     },
     mixins: {
@@ -83,6 +89,20 @@ export const reportTheme = createTheme({
                 },
             },
         },
+        MuiLink: {
+            styleOverrides: {
+                root: () => ({
+                    color: "blue",
+                    textDecoration: "underline",
+                    textDecorationColor: "blue",
+                    "&:visited": {
+                        color: "purple",
+                        textDecoration: "underline",
+                        textDecorationColor: "purple",
+                    },
+                }),
+            },
+        }
     },
 });
 
@@ -106,11 +126,13 @@ declare module "@mui/material/styles" {
         blue: Palette['primary'];
         green: Palette['primary'];
         purple: Palette['primary'];
+        lightGrey: Palette['primary']
     }
     interface PaletteOptions {
         blue?: PaletteOptions['primary'];
         green?: PaletteOptions['primary'];
         purple?: PaletteOptions['primary'];
+        lightGrey?: PaletteOptions['primary'];
     }
 
     interface Mixins {
