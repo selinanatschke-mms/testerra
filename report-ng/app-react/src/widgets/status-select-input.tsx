@@ -10,7 +10,7 @@ type SelectInputProps = {
     label: string
     selectedStatuses?: ResultStatus[],
     onChange: (value: ResultStatus[]) => void;
-    menuItems: ResultStatus[];
+    menuItems: number[];
     sx?: SxProps<Theme>;
 }
 

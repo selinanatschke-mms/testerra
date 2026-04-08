@@ -19,13 +19,14 @@
  * under the License.
  */
 
-import { useSearchParams } from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import { StatusService } from "../model/status-service";
 import type { ResultStatus } from "../model/status-service";
 import * as React from "react";
 import {useReportData} from "../provider/DataProvider";
 import {ClassName, classNameConverter} from "../utils/classNameConverter";
 import {useMemo} from "react";
+import {ResultStatusType} from "../model/report-model/framework_pb";
 
 export type FilterColor = "blue" | "green" | "purple" | "default";
 
@@ -128,7 +129,19 @@ export function useTestListFilters() {
             .sort((a, b) => a.localeCompare(b));
     }, [executionMngr]);
 
-    const statusMenuItems = StatusService.getRelevantStatuses();
+    const statusMenuItems = useMemo(() => {
+        if (!executionMngr) return [];
+        const resultStatuses: ResultStatusType[] | number[] = [];
+
+        executionMngr.getExecutionStatistics().classStatistics.forEach(classStat => {
+            classStat.methodContexts.forEach(context => {
+                if (!resultStatuses.includes(context.resultStatus!)) {
+                    resultStatuses.push(context.resultStatus!);
+                }
+            });
+        });
+        return resultStatuses;
+    }, [executionMngr]);
 
     const [searchParams, setSearchParams] = useSearchParams();
 
