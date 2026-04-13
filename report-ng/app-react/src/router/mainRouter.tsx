@@ -2,12 +2,11 @@
 import {createHashRouter, type RouteObject, Navigate} from 'react-router-dom';
 import MainLayout from "../layout/MainLayout.tsx";
 import AboutPage from "../pages/AboutPage.tsx";
-import TestsPage from "../pages/TestsPage.tsx";
 import TimingsPage from "../pages/TimingsPage.tsx";
 import DashboardPage from "../pages/DashboardPage.tsx";
 import MethodDetailsPage from "../pages/MethodDetailsPage.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
-import TestListPage from "../pages/TestListPage";
+import TestsPage from "../pages/TestsPage";
 
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
@@ -39,11 +38,6 @@ export const routesConfig: RouteObject[] = [
                 path: "Tests",
                 element: <TestsPage/>,
                 handle: {label: "Tests", show: true, icon: <AnalyticsRoundedIcon />} as RouteHandle
-            },
-            {
-                path: "testlist",
-                element: <TestListPage/>,
-                handle: {label: "Test List", show: true, icon: <AnalyticsRoundedIcon />} as RouteHandle
             },
             {
                 path: "about",

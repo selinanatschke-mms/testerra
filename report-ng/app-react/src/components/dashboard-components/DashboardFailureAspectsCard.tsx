@@ -54,7 +54,7 @@ const DashboardFailureAspectsCard = ({sx, execStatistics}: DashboardFailureAspec
         const params = new URLSearchParams(location.search);
         params.set("failureAspect", item.value.index);
         navigate({
-            pathname: "testlist",
+            pathname: "tests",
             search: params.toString(),
         });
     }

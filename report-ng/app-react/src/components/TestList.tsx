@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useReportData} from "../provider/DataProvider";
-import ReportChip from "../widgets/report-chip";
+import ReportChip from "../widgets/ReportChip";
 import {StatusService} from "../model/status-service";
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import CancelIcon from '@mui/icons-material/Cancel';
