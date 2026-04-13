@@ -19,15 +19,26 @@ import {ClassName, classNameConverter} from "../utils/classNameConverter";
 import HighlightText from "../utils/highlightText";
 import NoResultsCard from "./no-results-card";
 import {formatDuration} from "../utils/durationFormatter"
+import {useTestListSort} from "../hooks/useTestListSort";
+import TableSort from "../widgets/TableSort";
+
+
 
 interface TestListProps {
-    filters: FiltersState,
-    searchText: string,
-    showConfigurationMethods: boolean
+    filters: FiltersState;
+    searchText: string;
+    showConfigurationMethods: boolean;
 }
 
-const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps) => {
+const TestList = ({filters, searchText, showConfigurationMethods,}: TestListProps) => {
     const {executionMngr, isLoading, error} = useReportData();
+
+    const {
+        orderDirection,
+        orderBy,
+        handleRequestSort,
+        buildComparator
+    } = useTestListSort();
 
     // strings used for highlighting: live text while typing
     const activeSearchTerms = useMemo(
@@ -103,6 +114,10 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
         return filtered;
     }, [methodDetails, filters, showConfigurationMethods, executionMngr]);
 
+    const sortedMethodDetails = useMemo(() =>
+        [...filteredMethodDetails].sort(buildComparator(orderDirection, orderBy)),
+        [filteredMethodDetails, orderDirection, orderBy],
+    );
     const statusCount = useMemo(() =>
             new Set(filteredMethodDetails.map((m) => m.methodContext.resultStatus)).size,
         [filteredMethodDetails],
@@ -120,8 +135,6 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
         return <NoResultsCard/>
     }
 
-    console.log("filteredMethodDetails", filteredMethodDetails)
-
     return (
         <TableContainer component={Paper}>
             <Table sx={{
@@ -132,14 +145,22 @@ const TestList = ({filters, searchText, showConfigurationMethods}: TestListProps
                 <TableHead>
                     <TableRow>
                         <TableCell style={{width: "15%"}}>Status ({statusCount})</TableCell>
-                        <TableCell align={"center"} style={{width: "10%"}}>Run index</TableCell>
-                        <TableCell style={{width: "25%"}}>Class ({classCount})</TableCell>
-                        <TableCell style={{width: "10%"}}>Start time</TableCell>
-                        <TableCell>Method ({filteredMethodDetails.length})</TableCell>
+                        <TableCell align={"center"} style={{width: "10%"}} sortDirection={orderBy === "runIndex" ? orderDirection : false}>
+                            <TableSort orderBy={orderBy} orderDirection={orderDirection} onRequestSort={handleRequestSort} headerProperty="runIndex" label="Run Index"/>
+                        </TableCell>
+                        <TableCell style={{width: "25%"}} sortDirection={orderBy === "class" ? orderDirection : false}>
+                            <TableSort orderBy={orderBy} orderDirection={orderDirection} onRequestSort={handleRequestSort} headerProperty="class" label={`Class (${classCount})`}/>
+                        </TableCell>
+                        <TableCell style={{width: "10%"}} sortDirection={orderBy === "startTime" ? orderDirection : false}>
+                            <TableSort orderBy={orderBy} orderDirection={orderDirection} onRequestSort={handleRequestSort} headerProperty="startTime" label="Start Time"/>
+                        </TableCell>
+                        <TableCell sortDirection={orderBy === "method" ? orderDirection : false}>
+                            <TableSort orderBy={orderBy} orderDirection={orderDirection} onRequestSort={handleRequestSort} headerProperty="method" label={`Method (${filteredMethodDetails.length})`}/>
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {filteredMethodDetails && filteredMethodDetails.length > 0 && filteredMethodDetails.map((filteredMethodDetail) => (
+                    {sortedMethodDetails && sortedMethodDetails.length > 0 && sortedMethodDetails.map(filteredMethodDetail => (
                         <TableRow key={filteredMethodDetail?.methodContext.methodRunIndex}
                                   sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                             <TableCell component="th" scope="row">
