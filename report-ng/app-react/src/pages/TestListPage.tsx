@@ -1,12 +1,12 @@
 import Box from "@mui/material/Box";
 import {Grid, Switch} from "@mui/material";
-import StatusSelectInput from "../widgets/status-select-input";
+import StatusSelectInput from "../widgets/StatusSelectInput";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import MultiSelectInput from "../widgets/multi-select-input";
+import MultiSelectInput from "../widgets/MultiSelectInput";
 import {useTestListFilters} from "../hooks/useTestListFilters";
-import SelectedFiltersChips from "../components/selected-filter-chips";
+import SelectedFiltersChips from "../components/SelectedFilterChips";
 import TestList from "../components/TestList";
-import SearchInput from "../widgets/search-input";
+import SearchInput from "../widgets/SearchInput";
 import {useState} from "react";
 
 const TestListPage = () => {

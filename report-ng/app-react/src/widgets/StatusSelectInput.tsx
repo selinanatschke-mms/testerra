@@ -1,7 +1,7 @@
 import {Box, FormControl, MenuItem} from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-import ReportChip from "./report-chip";
+import ReportChip from "./ReportChip";
 import type {SxProps, Theme} from "@mui/material/styles";
 import {StatusService} from "../model/status-service";
 import type {ResultStatus} from "../model/status-service";

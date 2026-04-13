@@ -15,8 +15,8 @@ import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ListIcon from '@mui/icons-material/List';
 import type {JSX} from "react";
-import TestTimings from "../components/timings-tab-components/test-timings";
-import Sessions from "../components/timings-tab-components/sessions";
+import TestTimings from "../components/timings-tab-components/TestTimings";
+import Sessions from "../components/timings-tab-components/Sessions";
 
 // Custom attributes for menu elements
 export interface RouteHandle {
