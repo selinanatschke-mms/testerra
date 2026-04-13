@@ -47,6 +47,7 @@ type FilterDef<K extends FilterType> = {
     convertToURLString: (value: FilterValueMap[K]) => string | null;
     color?: ChipColor;
     getLabel: (value?: ResultStatus|string) => string;
+    tooltipText: string;
 };
 
 export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
@@ -71,7 +72,8 @@ export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
         color: "blue",
         getLabel: (value) => {
             return StatusService.get(value as ResultStatus)?.label ?? String(value);
-        }
+        },
+        tooltipText: "Status"
     },
 
     class: {
@@ -85,7 +87,8 @@ export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
         color: "green",
         getLabel: (value) => {
             return String(value);
-        }
+        },
+        tooltipText: "Class"
     },
 
     customText: {
@@ -99,7 +102,8 @@ export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
         color: "purple",
         getLabel: (value) => {
             return String(value);
-        }
+        },
+        tooltipText: "Custom Filter"
     },
 
     failureAspect: {
@@ -111,7 +115,8 @@ export const FILTERS: { [K in FilterType]: FilterDef<K> } = {
             if(!failureAspects.length) return null;
             return failureAspects[0];
         },
-        getLabel: () => "Custom Filter"
+        getLabel: () => "Custom Filter",
+        tooltipText: "Custom Filter Failure Aspects"
     }
 };
 

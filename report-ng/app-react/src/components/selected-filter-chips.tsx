@@ -49,6 +49,7 @@ const SelectedFiltersChips = ({selectedFilters, handleDelete, handleClearAllClic
                     label={filterDef.getLabel(value)}
                     color={FILTERS[filterType].color}
                     handleDelete={() => handleDelete(filterType, value)}
+                    tooltipText={filterDef.tooltipText}
                 />
             );
         });
